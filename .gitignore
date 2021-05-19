@@ -2,3 +2,7 @@ __pycache__/
 .direnv
 db.sqlite3
 .idea
+
+.venv
+/venv
+.vscode
