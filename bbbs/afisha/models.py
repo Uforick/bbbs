@@ -47,8 +47,9 @@ class Event(models.Model):
     city = models.ForeignKey(
         City, 
         verbose_name='Город',
+        related_name='events',
         help_text='Укажите, наименование города проведения события',
-        on_delete=models.RESTRICT
+        on_delete=models.CASCADE
     )
 
     def __str__(self):
@@ -61,19 +62,24 @@ class Event(models.Model):
 
 
 class EventParticipant(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User, 
         verbose_name='Пользователь',
+        related_name='event_user',
         help_text='Выберите пользователя на предстоящее событие',
         on_delete=models.CASCADE
     )
-    event = models.OneToOneField(
+    event = models.ForeignKey(
         Event,
         verbose_name='Событие',
+        related_name='event_follow',
         help_text='Выберите событие для пользователя', 
-        on_delete=models.RESTRICT
+        on_delete=models.CASCADE
     )
 
+    def __str__(self):
+        return self.event.title
+    
     class Meta:
         verbose_name = 'Участник'
         verbose_name_plural = 'Участники'

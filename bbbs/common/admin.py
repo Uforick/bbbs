@@ -1,7 +1,12 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 
 from bbbs.common.models import City, Profile
 
+
+User = get_user_model()
 
 class CityAdmin(admin.ModelAdmin):
     list_display = ('name', 'is_primary')
@@ -19,5 +24,22 @@ class ProfileAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+class MyUserAdmin(UserAdmin):
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active')}),
+    )
+    list_display = ('username', 'email', 'is_staff','is_active')
+    search_fields = ('username', 'email')
+    list_filter = ('username', 'email')
+    ordering = ('username', 'email')
+    empty_value_display = '-пусто-'
+
+
+admin.site.unregister(User)
+admin.site.unregister(Group)
+
+admin.site.register(User, MyUserAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Profile, ProfileAdmin)
