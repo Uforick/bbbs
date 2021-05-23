@@ -1,4 +1,12 @@
-__pycache__/
+.git/*
+env/
+.env
+venv/
 .direnv
+
+__pycache__/
+*.py[cod]
+
 db.sqlite3
+
 .idea
