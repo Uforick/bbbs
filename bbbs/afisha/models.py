@@ -78,7 +78,6 @@ class EventParticipant(models.Model):
 
     def __str__(self):
         return self.event.title
-
     class Meta:
         verbose_name = 'Участник'
         verbose_name_plural = 'Участники'

@@ -126,8 +126,8 @@ def change_user_profile_role(sender, **kwargs):
             all_perms_event
         )
 
-    # блокируем доступ до админки наставнику (при смене роли)
-    elif instance.role == 'MENTOR':
+    # блокируем доступ до админки наставнику (при смене роли/создании пользователя)
+    elif instance.role == 'MENTOR' and user.is_superuser is False:
         user.user_permissions.clear()
         user.is_staff = False
         user.save()
