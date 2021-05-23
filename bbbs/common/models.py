@@ -41,13 +41,9 @@ class Profile(models.Model):
         verbose_name='Пользователь',
         on_delete=models.CASCADE,
     )
-    city = models.ForeignKey(
+    city = models.ManyToManyField(
         City,
         verbose_name='Город',
-        null=True,
-        blank=True,
-        unique=False,
-        on_delete=models.RESTRICT,
     )
 
     def __str__(self):
