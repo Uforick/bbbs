@@ -4,6 +4,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from bbbs.common.validators import city_name_validator
+
 User = get_user_model()
 
 
@@ -11,11 +13,18 @@ class City(models.Model):
     name = models.CharField(
         verbose_name='Город',
         help_text='Введите название города',
-        max_length=30
+        max_length=30,
+        # Проверяем, что в названии города только русские буквы.
+        validators=[city_name_validator],
+        # Полагаю, что в нашем случае двух городов с одним названием - нет.
+        unique=True
     )
     is_primary = models.BooleanField(
-        verbose_name='Основной',
-        help_text='Укажите, если город является основным для вас',
+        # Возможно стоит дать другое название,но я так понял,
+        # что это города выше черты см. ссылку
+        # https://www.figma.com/file/11gCLSDOYlvkbuI3FU36Up/BBBS-for-students?node-id=1243%3A195
+        verbose_name='Главный',
+        help_text='Укажите главный ли город',
         default=False
     )
 
@@ -24,8 +33,9 @@ class City(models.Model):
 
     class Meta:
         verbose_name = 'Город'
-        verbose_name_plural = 'Города'
-        ordering = ('name',)
+        verbose_name_plural = "Города"
+        # Сначала главные города, потом по алфавиту остальные
+        ordering = ('-is_primary', 'name')
 
 
 class Profile(models.Model):
@@ -46,12 +56,10 @@ class Profile(models.Model):
         choices=PermissionChoice.choices,
         default=PermissionChoice.MENTOR,
     )
-    city = models.OneToOneField(
+    city = models.ManyToManyField(
         City,
         verbose_name='Город',
-        blank=True,
-        null=True,
-        on_delete=models.RESTRICT)
+    )
 
     def __str__(self):
         return self.user.username
@@ -59,7 +67,8 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили'
-        ordering = ('user',)
+        # Сортируем по имени пользователя
+        ordering = ('user__username',)
 
     @property
     def is_mentor(self):
