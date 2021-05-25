@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics
 
 from bbbs.afisha.models import Event, EventParticipant
 from bbbs.afisha.serializers import EventSerializer, EventParticipantSerializer
@@ -24,4 +24,16 @@ class EventList(generics.ListAPIView):
 class EventParticipantList(generics.ListCreateAPIView, generics.DestroyAPIView):
     queryset = EventParticipant.objects.all()
     serializer_class = EventParticipantSerializer
+    
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = user.event_user.all()
+        return queryset
+
+    def get_object(self):
+        obj = self.request.user.event_user.all()
+        return obj
