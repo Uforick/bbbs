@@ -7,6 +7,9 @@ User = get_user_model()
 
 
 class Event(models.Model):
+    booked = models.BooleanField(
+        default = False,
+    )
     address = models.CharField(
         max_length=200,
         verbose_name='Адрес',
@@ -53,6 +56,7 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
 
     class Meta:
         verbose_name = 'Событие'
