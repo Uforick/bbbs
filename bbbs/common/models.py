@@ -56,11 +56,9 @@ class Profile(models.Model):
         choices=PermissionChoice.choices,
         default=PermissionChoice.MENTOR,
     )
-    city = models.OneToOneField(
+    city = models.ManyToManyField(
         City,
-        blank=True,
-        null=True,
-        on_delete=models.RESTRICT
+        verbose_name='Город',
     )
 
     def __str__(self):
