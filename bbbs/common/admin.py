@@ -1,12 +1,9 @@
-from django.apps import apps
 from django.contrib import admin
-from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
 from bbbs.common.models import City, Profile
-
 
 User = get_user_model()
 

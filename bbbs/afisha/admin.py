@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 from django.contrib.admin.views.main import ChangeList
+from django.contrib.auth import get_user_model
 
 from bbbs.afisha.models import Event
 from bbbs.common.models import Profile
