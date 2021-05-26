@@ -20,11 +20,16 @@ class CityAdmin(admin.ModelAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     form = ProfileAdminForm
-    list_display = ('user', 'city')
+    list_display = ('user', 'get_cities')
     search_fields = ('user', 'city')
     list_filter = ('user', 'city')
-    ordering = ('user', 'city')
+    ordering = ('user',)
     empty_value_display = '-пусто-'
+    
+    def get_cities(self, obj):
+        return ', '.join([city.name for city in obj.city.all()])
+
+    get_cities.short_description = 'Города'
 
 
 class MyUserAdmin(UserAdmin):

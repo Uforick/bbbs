@@ -14,8 +14,7 @@ class MyEventChangeList(ChangeList):
         user_profile = Profile.objects.get(user=request.user)
         # фильтруем выдачу для регионального модератора по городу
         if user_profile.role == 'REGION_MODERATOR':
-            print(user_profile.city)
-            return qs.filter(city=user_profile.city)
+            return qs.filter(city__in = user_profile.get_city)
         return qs
 
 

@@ -15,11 +15,10 @@ class EventList(generics.ListAPIView):
             events = Event.objects.all()
         elif self.request.user.is_authenticated:
             self_profile = generics.get_object_or_404(Profile, user = self.request.user)
-            events = Event.objects.filter(city = self_profile.get_city())
+            events = Event.objects.filter(city__in = self_profile.get_city)
         elif self.request.user.is_anonymous:
             events = Event.objects.filter(city=self.kwargs.get('city'))
         return events
-
 
 
 class EventParticipantList(generics.ListCreateAPIView,

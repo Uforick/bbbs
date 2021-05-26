@@ -58,21 +58,23 @@ class Profile(models.Model):
     )
     city = models.ManyToManyField(
         City,
-        verbose_name='Город',
+        help_text='Выберите один или несколько городов.<br>',
+        related_name='profile_city',
+        verbose_name='Город'
     )
 
     def __str__(self):
         return self.user.username
-
-    def get_city(self):
-        return self.city
-
 
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили'
         # Сортируем по имени пользователя
         ordering = ('user__username',)
+
+    @property
+    def get_city(self):
+        return self.city.all()
 
     @property
     def is_mentor(self):
