@@ -18,3 +18,4 @@ class EventParticipantSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventParticipant
         fields = ['id', 'event']
+

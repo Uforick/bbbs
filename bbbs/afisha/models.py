@@ -7,6 +7,11 @@ User = get_user_model()
 
 
 class Event(models.Model):
+    booked = models.BooleanField(
+        default = False,
+        verbose_name='Бронь места',
+        help_text='Забронировать место на событии',
+    )
     address = models.CharField(
         max_length=200,
         verbose_name='Адрес',
@@ -54,6 +59,7 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+
     class Meta:
         verbose_name = 'Событие'
         verbose_name_plural = 'События'
@@ -83,3 +89,7 @@ class EventParticipant(models.Model):
         verbose_name = 'Участник'
         verbose_name_plural = 'Участники'
         ordering = ('user',)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'event'], name='unique_object')
+        ]

@@ -56,13 +56,19 @@ class Profile(models.Model):
         choices=PermissionChoice.choices,
         default=PermissionChoice.MENTOR,
     )
-    city = models.ManyToManyField(
+    city = models.OneToOneField(
         City,
-        verbose_name='Город',
+        blank=True,
+        null=True,
+        on_delete=models.RESTRICT
     )
 
     def __str__(self):
         return self.user.username
+
+    def get_city(self):
+        return self.city
+
 
     class Meta:
         verbose_name = 'Профиль пользователя'
