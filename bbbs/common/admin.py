@@ -1,12 +1,10 @@
-from django.apps import apps
 from django.contrib import admin
-from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
 from bbbs.common.models import City, Profile
-
+from bbbs.common.forms import ProfileAdminForm
 
 User = get_user_model()
 
@@ -20,6 +18,7 @@ class CityAdmin(admin.ModelAdmin):
 
 
 class ProfileAdmin(admin.ModelAdmin):
+    form = ProfileAdminForm
     list_display = ('user', 'city')
     search_fields = ('user', 'city')
     list_filter = ('user', 'city')
