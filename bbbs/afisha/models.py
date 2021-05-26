@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
 from bbbs.common.models import City
 
@@ -43,11 +44,13 @@ class Event(models.Model):
         verbose_name='Кол-во мест',
         help_text='Укажите, количество посадочных мест',
     )
+
     taken_seats = models.IntegerField(
         default=0,
         verbose_name='Кол-во занятых мест',
         help_text='Укажите, количество занятых посадочных мест',
     )
+
     city = models.ForeignKey(
         City,
         verbose_name='Город',
@@ -58,6 +61,19 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+
+    @property
+    def taken_seats(self):
+        return self.event_follow.count()
+
+    @property
+    def has_free_seats(self):
+        return self.seats > self.taken_seats
+
+    @property
+    def has_started(self):
+        return timezone.now() >= self.start_at
 
 
     class Meta:
@@ -84,12 +100,15 @@ class EventParticipant(models.Model):
 
     def __str__(self):
         return self.event.title
-        
+
     class Meta:
         verbose_name = 'Участник'
         verbose_name_plural = 'Участники'
         ordering = ('user',)
+
+
         constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'event'], name='unique_object')
+            models.UniqueConstraint(fields=['user', 'event'],
+                                    name='unique_participation'),
+
         ]

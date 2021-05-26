@@ -1,4 +1,5 @@
-from rest_framework import generics
+from rest_framework import generics, status, permissions
+from rest_framework.response import Response
 
 from bbbs.afisha.models import Event, EventParticipant
 from bbbs.afisha.serializers import EventParticipantSerializer, EventSerializer
@@ -21,19 +22,21 @@ class EventList(generics.ListAPIView):
 
 
 
-class EventParticipantList(generics.ListCreateAPIView, generics.DestroyAPIView):
-    queryset = EventParticipant.objects.all()
-    serializer_class = EventParticipantSerializer
-    
+class EventParticipantList(generics.ListCreateAPIView,
+                           generics.DestroyAPIView):
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    serializer_class = EventParticipantSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        assert 'event' in request.data, 'Нет id события в запросе'
+        event = request.data['event']
+        object = self.get_queryset().filter(event=event)
+        object.delete()
+        # уточнить что нужно возвращать после удаления участия
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_queryset(self):
         user = self.request.user
-        queryset = user.event_user.all()
-        return queryset
+        return EventParticipant.objects.filter(user=user)
 
-    def get_object(self):
-        obj = self.request.user.event_user.all()
-        return obj
