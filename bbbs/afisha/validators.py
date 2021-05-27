@@ -1,6 +1,6 @@
-from rest_framework import serializers
+from django.core.exceptions import ValidationError
 
-from django.utils import timezone
+from rest_framework import serializers
 
 
 class AvailableSeatsValidator:
@@ -23,3 +23,11 @@ class EventStartedValidator:
         if event.has_started:
             message = 'Событие уже началось.'
             raise serializers.ValidationError(message)
+
+
+class PositiveSeatsValueValidator:
+
+    def __call__(self, value):
+        if value <= 0:
+            message = 'Введите положительное число.'
+            raise ValidationError(message)
