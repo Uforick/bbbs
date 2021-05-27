@@ -5,6 +5,8 @@ from django.contrib.auth.models import Group
 
 from bbbs.common.forms import ProfileAdminForm
 from bbbs.common.models import City, Profile
+from bbbs.common.forms import ProfileAdminForm
+
 
 User = get_user_model()
 
@@ -24,6 +26,11 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ('user', 'city')
     ordering = ('user',)
     empty_value_display = '-пусто-'
+    
+    def get_cities(self, obj):
+        return ', '.join([city.name for city in obj.city.all()])
+
+    get_cities.short_description = 'Города'
 
     def get_cities(self, obj):
         return ', '.join([city.name for city in obj.city.all()])

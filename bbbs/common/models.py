@@ -14,10 +14,15 @@ class City(models.Model):
         verbose_name='Имя',
         help_text='Введите название города',
         max_length=30,
+        # Проверяем, что в названии города только русские буквы.
         validators=[city_name_validator],
+        # Полагаю, что в нашем случае двух городов с одним названием - нет.
         unique=True
     )
     is_primary = models.BooleanField(
+        # Возможно стоит дать другое название,но я так понял,
+        # что это города выше черты см. ссылку
+        # https://www.figma.com/file/11gCLSDOYlvkbuI3FU36Up/BBBS-for-students?node-id=1243%3A195
         verbose_name='Главный',
         help_text='Укажите главный ли город',
         default=False
@@ -29,6 +34,7 @@ class City(models.Model):
     class Meta:
         verbose_name = 'Город'
         verbose_name_plural = "Города"
+        # Сначала главные города, потом по алфавиту остальные
         ordering = ('-is_primary', 'name')
 
 
@@ -63,6 +69,7 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили'
+        # Сортируем по имени пользователя
         ordering = ('user__username',)
 
     @property
@@ -103,19 +110,12 @@ class Profile(models.Model):
 def change_user_profile_role(sender, **kwargs):
     instance = kwargs.get('instance')
     user = instance.user
-    all_perms_event = Permission.objects.filter(
-        codename__endswith='event'
-    )
-    all_perms_сity = Permission.objects.filter(
-        codename__endswith='city'
-    )
-    all_perms_profile = Permission.objects.filter(
-        codename__endswith='profile'
-    )
-    all_perms_user = Permission.objects.filter(
-        codename__endswith='user'
-    )
+    all_perms_event = Permission.objects.filter(codename__endswith='event')
+    all_perms_сity = Permission.objects.filter(codename__endswith='city')
+    all_perms_profile = Permission.objects.filter(codename__endswith='profile')
+    all_perms_user = Permission.objects.filter(codename__endswith='user')
 
+    # полные разрешения на Event, City, Profile, User
     if instance.role == 'ADMIN':
         user.user_permissions.clear()
         user.user_permissions.add(*all_perms_event)

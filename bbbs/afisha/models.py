@@ -10,7 +10,7 @@ User = get_user_model()
 
 class Event(models.Model):
     booked = models.BooleanField(
-        default=False,
+        default = False,
         verbose_name='Бронь места',
         help_text='Забронировать место на событии',
     )
@@ -46,7 +46,6 @@ class Event(models.Model):
         validators=[PositiveSeatsValueValidator()],
         help_text='Укажите, количество посадочных мест',
     )
-
     city = models.ForeignKey(
         City,
         verbose_name='Город',

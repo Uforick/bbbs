@@ -5,10 +5,14 @@ from bbbs.afisha.models import Event, EventParticipant
 from bbbs.afisha.validators import (AvailableSeatsValidator,
                                     EventStartedValidator)
 
+from bbbs.afisha.validators import (AvailableSeatsValidator,
+                                    EventStartedValidator)
+
 
 class EventSerializer(serializers.ModelSerializer):
     booked = serializers.SerializerMethodField('get_booked')
-
+    taken_seats = serializers.ReadOnlyField()      
+    
     def get_booked(self, obj):
         user = self.context.get('request').user
         if user.is_authenticated:
