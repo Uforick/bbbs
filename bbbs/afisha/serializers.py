@@ -12,7 +12,9 @@ class EventSerializer(serializers.ModelSerializer):
 
     def get_booked(self, obj):
         user = self.context.get('request').user
-        return user.event_user.filter(event=obj).exists()
+        if user.is_authenticated:
+            return user.event_user.filter(event=obj).exists()
+        return False
 
     class Meta:
         model = Event
