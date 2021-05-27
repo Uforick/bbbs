@@ -16,9 +16,6 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        #  если через __all__, то нужно указать конкретно
-        #  taken_seats = serializers.ReadOnlyField,
-        #  но при этом нарушается порядок полей
 
         fields = ['id', 'booked', 'address', 'contact', 'title', 'description',
                   'start_at', 'end_at', 'seats', 'taken_seats', 'city']
