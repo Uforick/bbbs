@@ -30,12 +30,4 @@ class EventAdmin(admin.ModelAdmin):
         return MyEventChangeList
 
 
-class EventParticipantAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'event')
-    search_fields = ('user', 'event')
-    list_filter = ('user', 'event')
-    ordering = ('id', )
-    empty_value_display = '-пусто-'
-
-
 admin.site.register(Event, EventAdmin)
