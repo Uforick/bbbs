@@ -3,9 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
-from bbbs.common.models import City, Profile
 from bbbs.common.forms import ProfileAdminForm
-
+from bbbs.common.models import City, Profile
 
 User = get_user_model()
 
@@ -25,7 +24,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ('user', 'city')
     ordering = ('user',)
     empty_value_display = '-пусто-'
-    
+
     def get_cities(self, obj):
         return ', '.join([city.name for city in obj.city.all()])
 
@@ -38,7 +37,7 @@ class MyUserAdmin(UserAdmin):
         ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
-    list_display = ('username', 'email', 'is_staff','is_active')
+    list_display = ('username', 'email', 'is_staff', 'is_active')
     search_fields = ('username', 'email')
     list_filter = ('username', 'email')
     ordering = ('username', 'email')

@@ -10,7 +10,7 @@ User = get_user_model()
 
 class Event(models.Model):
     booked = models.BooleanField(
-        default = False,
+        default=False,
         verbose_name='Бронь места',
         help_text='Забронировать место на событии',
     )
@@ -47,12 +47,6 @@ class Event(models.Model):
         help_text='Укажите, количество посадочных мест',
     )
 
-    taken_seats = models.IntegerField(
-        default=0,
-        verbose_name='Кол-во занятых мест',
-        help_text='Укажите, количество занятых посадочных мест',
-    )
-
     city = models.ForeignKey(
         City,
         verbose_name='Город',
@@ -63,7 +57,6 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
-
 
     @property
     def taken_seats(self):
@@ -76,7 +69,6 @@ class Event(models.Model):
     @property
     def has_started(self):
         return timezone.now() >= self.start_at
-
 
     class Meta:
         verbose_name = 'Событие'
@@ -107,7 +99,6 @@ class EventParticipant(models.Model):
         verbose_name = 'Участник'
         verbose_name_plural = 'Участники'
         ordering = ('user',)
-
 
         constraints = [
             models.UniqueConstraint(fields=['user', 'event'],

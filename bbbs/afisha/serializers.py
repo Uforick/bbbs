@@ -2,7 +2,6 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from bbbs.afisha.models import Event, EventParticipant
-
 from bbbs.afisha.validators import (AvailableSeatsValidator,
                                     EventStartedValidator)
 
@@ -37,4 +36,3 @@ class EventParticipantSerializer(serializers.ModelSerializer):
             AvailableSeatsValidator(),
             EventStartedValidator(),
         ]
-
