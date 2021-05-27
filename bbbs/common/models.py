@@ -63,7 +63,6 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили'
-        # Сортируем по имени пользователя
         ordering = ('user__username',)
 
     @property
@@ -72,21 +71,21 @@ class Profile(models.Model):
 
     @property
     def is_mentor(self):
-        'Returns True if user has role mentor.'
+        """Returns True if user has role mentor."""
         if self.role == self.PermissionChoice.MENTOR:
             return True
         return False
 
     @property
     def is_moderator(self):
-        'Returns True if user has role moderator.'
+        """Returns True if user has role moderator."""
         if self.role == self.PermissionChoice.MODERATOR:
             return True
         return False
 
     @property
     def is_region_moderator(self):
-        'Returns True if user has role region moderator.'
+        """Returns True if user has role region moderator."""
         if self.role == self.PermissionChoice.REGION_MODERATOR:
             return True
         return False
