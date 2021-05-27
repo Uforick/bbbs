@@ -1,15 +1,14 @@
-from django.apps import apps
 from django.contrib import admin
-from django.contrib.admin.sites import AlreadyRegistered
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
 from bbbs.common.models import City, Profile
-
+from bbbs.common.forms import ProfileAdminForm
 
 
 User = get_user_model()
+
 
 class CityAdmin(admin.ModelAdmin):
     list_display = ('name', 'is_primary')
@@ -20,11 +19,17 @@ class CityAdmin(admin.ModelAdmin):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'city')
+    form = ProfileAdminForm
+    list_display = ('user', 'get_cities')
     search_fields = ('user', 'city')
     list_filter = ('user', 'city')
-    ordering = ('user', 'city')
+    ordering = ('user',)
     empty_value_display = '-пусто-'
+    
+    def get_cities(self, obj):
+        return ', '.join([city.name for city in obj.city.all()])
+
+    get_cities.short_description = 'Города'
 
 
 class MyUserAdmin(UserAdmin):
@@ -38,7 +43,6 @@ class MyUserAdmin(UserAdmin):
     list_filter = ('username', 'email')
     ordering = ('username', 'email')
     empty_value_display = '-пусто-'
-
 
 
 admin.site.unregister(User)

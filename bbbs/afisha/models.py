@@ -1,13 +1,19 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
+from bbbs.afisha.validators import PositiveSeatsValueValidator
 from bbbs.common.models import City
-
 
 User = get_user_model()
 
 
 class Event(models.Model):
+    booked = models.BooleanField(
+        default = False,
+        verbose_name='Бронь места',
+        help_text='Забронировать место на событии',
+    )
     address = models.CharField(
         max_length=200,
         verbose_name='Адрес',
@@ -37,15 +43,11 @@ class Event(models.Model):
     )
     seats = models.IntegerField(
         verbose_name='Кол-во мест',
+        validators=[PositiveSeatsValueValidator()],
         help_text='Укажите, количество посадочных мест',
     )
-    taken_seats = models.IntegerField(
-        default=0,
-        verbose_name='Кол-во занятых мест',
-        help_text='Укажите, количество занятых посадочных мест',
-    )
     city = models.ForeignKey(
-        City, 
+        City,
         verbose_name='Город',
         related_name='events',
         help_text='Укажите, наименование города проведения события',
@@ -55,6 +57,20 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+
+    @property
+    def taken_seats(self):
+        return self.event_follow.count()
+
+    @property
+    def has_free_seats(self):
+        return self.seats > self.taken_seats
+
+    @property
+    def has_started(self):
+        return timezone.now() >= self.start_at
+
+
     class Meta:
         verbose_name = 'Событие'
         verbose_name_plural = 'События'
@@ -63,7 +79,7 @@ class Event(models.Model):
 
 class EventParticipant(models.Model):
     user = models.ForeignKey(
-        User, 
+        User,
         verbose_name='Пользователь',
         related_name='event_user',
         help_text='Выберите пользователя на предстоящее событие',
@@ -73,14 +89,21 @@ class EventParticipant(models.Model):
         Event,
         verbose_name='Событие',
         related_name='event_follow',
-        help_text='Выберите событие для пользователя', 
+        help_text='Выберите событие для пользователя',
         on_delete=models.CASCADE
     )
 
     def __str__(self):
         return self.event.title
-    
+
     class Meta:
         verbose_name = 'Участник'
         verbose_name_plural = 'Участники'
         ordering = ('user',)
+
+
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'event'],
+                                    name='unique_participation'),
+
+        ]
