@@ -11,7 +11,7 @@ User = get_user_model()
 
 class City(models.Model):
     name = models.CharField(
-        verbose_name='Город',
+        verbose_name='Имя',
         help_text='Введите название города',
         max_length=30,
         # Проверяем, что в названии города только русские буквы.
