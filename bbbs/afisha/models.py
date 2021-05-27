@@ -57,7 +57,6 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
-
     @property
     def taken_seats(self):
         return self.event_follow.count()
@@ -69,7 +68,6 @@ class Event(models.Model):
     @property
     def has_started(self):
         return timezone.now() >= self.start_at
-
 
     class Meta:
         verbose_name = 'Событие'
@@ -100,7 +98,6 @@ class EventParticipant(models.Model):
         verbose_name = 'Участник'
         verbose_name_plural = 'Участники'
         ordering = ('user',)
-
 
         constraints = [
             models.UniqueConstraint(fields=['user', 'event'],

@@ -78,29 +78,30 @@ class Profile(models.Model):
 
     @property
     def is_mentor(self):
-        'Returns True if user has role mentor.'
+        """Returns True if user has role mentor."""
         if self.role == self.PermissionChoice.MENTOR:
             return True
         return False
 
     @property
     def is_moderator(self):
-        'Returns True if user has role moderator.'
+        """Returns True if user has role moderator."""
         if self.role == self.PermissionChoice.MODERATOR:
             return True
         return False
 
     @property
     def is_region_moderator(self):
-        'Returns True if user has role region moderator.'
+        """Returns True if user has role region moderator."""
         if self.role == self.PermissionChoice.REGION_MODERATOR:
             return True
         return False
 
     @property
     def is_admin(self):
-        'Returns True if user has role admin.'
-        if self.role == self.PermissionChoice.ADMIN or self.user.is_staff is True:
+        """Returns True if user has role admin."""
+        if self.role == self.PermissionChoice.ADMIN \
+                or self.user.is_staff is True:
             return True
         return False
 
@@ -122,26 +123,21 @@ def change_user_profile_role(sender, **kwargs):
         user.user_permissions.add(*all_perms_profile)
         user.user_permissions.add(*all_perms_user)
 
-    # полные разрешения на модель City
-    # только view на остальные модели
     elif instance.role == 'MODERATOR':
-        # надо сделать запрос - который выведет view права для требуемых моделей,
-        # исключив ненужные build-in модели django (contenttypes, sessio, group, admin)
-        can_view_all_models = Permission.objects.filter(codename__startswith='view_')
+        can_view_all_models = Permission.objects.filter(
+            codename__startswith='view_'
+        )
         user.user_permissions.clear()
         user.user_permissions.add(
             *can_view_all_models,
             *all_perms_сity
         )
 
-    # полные разрешения на модель Event
-    # в админке выводятся только города модератора
     elif instance.role == 'REGION_MODERATOR':
         user.user_permissions.set(
             all_perms_event
         )
 
-    # блокируем доступ до админки наставнику (при смене роли/создании пользователя)
     elif instance.role == 'MENTOR' and user.is_superuser is False:
         user.user_permissions.clear()
         user.is_staff = False

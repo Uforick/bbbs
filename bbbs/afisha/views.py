@@ -38,4 +38,3 @@ class EventParticipantList(generics.ListCreateAPIView,
     def get_queryset(self):
         user = self.request.user
         return EventParticipant.objects.filter(user=user)
-

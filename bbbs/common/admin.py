@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
+from bbbs.common.forms import ProfileAdminForm
 from bbbs.common.models import City, Profile
 from bbbs.common.forms import ProfileAdminForm
 
@@ -31,6 +32,11 @@ class ProfileAdmin(admin.ModelAdmin):
 
     get_cities.short_description = 'Города'
 
+    def get_cities(self, obj):
+        return ', '.join([city.name for city in obj.city.all()])
+
+    get_cities.short_description = 'Города'
+
 
 class MyUserAdmin(UserAdmin):
     fieldsets = (
@@ -38,7 +44,7 @@ class MyUserAdmin(UserAdmin):
         ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
-    list_display = ('username', 'email', 'is_staff','is_active')
+    list_display = ('username', 'email', 'is_staff', 'is_active')
     search_fields = ('username', 'email')
     list_filter = ('username', 'email')
     ordering = ('username', 'email')
