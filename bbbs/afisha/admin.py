@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_user_model
 
+from bbbs.afisha.forms import EventAdminForm
 from bbbs.afisha.models import Event
 from bbbs.common.models import Profile
 
@@ -9,6 +10,7 @@ User = get_user_model()
 
 
 class EventAdmin(admin.ModelAdmin):
+    form = EventAdminForm
     list_display = ('title', 'city', 'contact', 'start_at', 'end_at')
     search_fields = ('title', 'city', 'contact', 'start_at', 'end_at')
     list_filter = ('title', 'city', 'contact', 'start_at', 'end_at')
