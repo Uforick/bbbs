@@ -8,16 +8,6 @@ from bbbs.common.models import Profile
 User = get_user_model()
 
 
-class MyEventChangeList(ChangeList):
-    def get_queryset(self, request):
-        qs = super(MyEventChangeList, self).get_queryset(request)
-        user_profile = Profile.objects.get(user=request.user)
-        # фильтруем выдачу для регионального модератора по городу
-        if user_profile.role == 'REGION_MODERATOR':
-            return qs.filter(city__in = user_profile.get_city)
-        return qs
-
-
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'city', 'contact', 'start_at', 'end_at')
     search_fields = ('title', 'city', 'contact', 'start_at', 'end_at')
@@ -26,8 +16,13 @@ class EventAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     readonly_fields = ('get_taken_seats',)
 
-    def get_changelist(self, request, **kwargs):
-        return MyEventChangeList
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        user_profile = Profile.objects.get(user=request.user)
+        # фильтруем выдачу для регионального модератора по городу
+        if user_profile.role == Profile.PermissionChoice.REGION_MODERATOR:
+            return qs.filter(city__in = user_profile.get_city)
+        return qs
     
     def get_taken_seats(self, obj):
         return obj.taken_seats
