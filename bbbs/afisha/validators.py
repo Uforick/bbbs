@@ -24,9 +24,15 @@ class EventStartedValidator:
             raise serializers.ValidationError(message)
 
 
-class PositiveSeatsValueValidator:
+# class PositiveSeatsValueValidator:
 
-    def __call__(self, value):
-        if value <= 0:
-            message = 'Введите положительное число.'
-            raise ValidationError(message)
+#     def __call__(self, value):
+#         if value <= 0:
+#             message = 'Введите положительное число.'
+#             raise ValidationError(message)
+
+def positive_seats_value_validator(value):
+    if value <= 0:
+        message = 'Введите положительное число.'
+        raise ValidationError(message)
+        
