@@ -59,6 +59,7 @@ class Profile(models.Model):
     city = models.ManyToManyField(
         City,
         verbose_name='Город',
+        blank=True,
     )
 
     def __str__(self):
