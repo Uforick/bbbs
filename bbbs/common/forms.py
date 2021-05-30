@@ -9,3 +9,4 @@ class ProfileAdminForm(forms.ModelForm):
             raise forms.ValidationError(
                 "У наставника не может быть больше одного города."
             )
+

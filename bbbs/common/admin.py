@@ -26,6 +26,15 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ('user', 'city')
     ordering = ('user',)
     empty_value_display = '-пусто-'
+    
+    def get_cities(self, obj):
+        qs =  Profile.objects.filter(
+            pk=obj.pk, city__isnull = False
+            ).values_list('city__name', flat=True)
+        if qs:
+            return list(qs)
+
+    get_cities.short_description = 'Города'
 
     def get_cities(self, obj):
         qs =  Profile.objects.filter(
