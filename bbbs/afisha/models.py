@@ -9,7 +9,7 @@ User = get_user_model()
 
 class Event(models.Model):
     booked = models.BooleanField(
-        default = False,
+        default=False,
         verbose_name='Бронь места',
         help_text='Забронировать место на событии',
     )

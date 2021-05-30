@@ -21,4 +21,3 @@ class EventStartedValidator:
         if event.has_started:
             message = 'Событие уже началось.'
             raise serializers.ValidationError(message)
-        

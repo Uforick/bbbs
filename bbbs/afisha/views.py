@@ -16,7 +16,7 @@ class EventList(generics.ListAPIView):
             events = Event.objects.all()
         elif self.request.user.is_authenticated:
             self_profile = generics.get_object_or_404(Profile, user=self.request.user)
-            events = Event.objects.filter(city__in=self_profile.get_city)
+            events = Event.objects.filter(city__in=self_profile.user_cities)
         elif not self.request.user.is_authenticated:
             events = Event.objects.filter(city=self.request.GET.get('city'))
         return events

@@ -21,7 +21,7 @@ class EventAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         user_profile = Profile.objects.get(user=request.user)
         if user_profile.role == Profile.PermissionChoice.REGION_MODERATOR:
-            return qs.filter(city__in=user_profile.get_city)
+            return qs.filter(city__in=user_profile.user_cities)
         return qs
 
     def get_taken_seats(self, obj):

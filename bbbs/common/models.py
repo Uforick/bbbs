@@ -66,7 +66,7 @@ class Profile(models.Model):
         ordering = ('user__username',)
 
     @property
-    def get_city(self):
+    def user_cities(self):
         return self.city.all()
 
     @property
