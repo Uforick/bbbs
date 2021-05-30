@@ -9,10 +9,9 @@ SECRET_KEY = 'django-insecure-go4af76puk-&fg^ou5-=2^wb#yh1=qv(r@&+@40t*u(3jrr+a2
 
 DEBUG = True
 
+SNIP_EMAIL = "contact@snippets.local"
+
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,6 +25,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'bbbs.afisha',
     'bbbs.common',
+    'bbbs.main',
 ]
 
 MIDDLEWARE = [
@@ -58,18 +58,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bbbs.wsgi.application'
 
-
-# Database
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# Password validation
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -86,9 +80,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-
 LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
@@ -99,15 +90,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-
 STATIC_URL = '/static/'
 
-# Default primary key field type
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

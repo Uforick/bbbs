@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_user_model
 
 from bbbs.afisha.forms import EventAdminForm
@@ -21,14 +20,14 @@ class EventAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         user_profile = Profile.objects.get(user=request.user)
-        # фильтруем выдачу для регионального модератора по городу
         if user_profile.role == Profile.PermissionChoice.REGION_MODERATOR:
-            return qs.filter(city__in = user_profile.get_city)
+            return qs.filter(city__in=user_profile.get_city)
         return qs
-    
+
     def get_taken_seats(self, obj):
         return obj.taken_seats
 
     get_taken_seats.short_description = 'Кол-во занятых мест'
+
 
 admin.site.register(Event, EventAdmin)
