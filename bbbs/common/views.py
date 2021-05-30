@@ -12,7 +12,6 @@ class CityList(generics.ListAPIView):
 
 
 class ProfileView(generics.RetrieveUpdateAPIView):
-    permission_classes =(IsAuthenticated,)
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
