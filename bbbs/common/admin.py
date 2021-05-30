@@ -36,6 +36,15 @@ class ProfileAdmin(admin.ModelAdmin):
 
     get_cities.short_description = 'Города'
 
+    def get_cities(self, obj):
+        qs =  Profile.objects.filter(
+            pk=obj.pk, city__isnull = False
+            ).values_list('city__name', flat=True)
+        if qs:
+            return list(qs)
+
+    get_cities.short_description = 'Города'
+
 
 class MyUserAdmin(UserAdmin):
     fieldsets = (

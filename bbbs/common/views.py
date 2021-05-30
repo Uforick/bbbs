@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+
 from rest_framework import generics, permissions
 
 from bbbs.common.models import City, Profile
@@ -11,6 +12,7 @@ class CityList(generics.ListAPIView):
 
 
 class ProfileView(generics.RetrieveUpdateAPIView):
+    permission_classes =(IsAuthenticated,)
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
