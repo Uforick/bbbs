@@ -15,6 +15,7 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ('title', 'city', 'contact', 'start_at', 'end_at')
     ordering = ('city',)
     empty_value_display = '-пусто-'
+    exclude = ('booked',)
     readonly_fields = ('get_taken_seats',)
 
     def get_queryset(self, request):
