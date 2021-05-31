@@ -36,5 +36,4 @@ class EventParticipantList(generics.ListCreateAPIView,
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_queryset(self):
-        user = self.request.user
-        return EventParticipant.objects.filter(user=user)
+        return self.request.user.event_user.all()
