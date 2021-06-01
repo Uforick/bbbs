@@ -21,13 +21,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('id', 'user', 'city')
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if instance.is_mentor:
-            data['city'] = data.get('city')[0]
-            return data
-        return data
-
     def validate(self, attrs):
         profile = get_object_or_404(Profile, user=self.context['request'].user)
         cities = self.context['request'].data.get('city')
