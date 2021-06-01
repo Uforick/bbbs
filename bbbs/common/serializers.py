@@ -1,9 +1,6 @@
-from typing import OrderedDict
 from django.shortcuts import get_object_or_404
 
 from rest_framework import serializers
-from rest_framework import fields
-from rest_framework.fields import empty
 
 from bbbs.common.models import City, Profile
 
@@ -19,7 +16,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'user', 'city')
+        exclude = ('role',)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['city'] = data.get('city')[0]
+        return data
 
     def validate(self, attrs):
         profile = get_object_or_404(Profile, user=self.context['request'].user)

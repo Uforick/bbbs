@@ -15,6 +15,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
     def get_object(self):
         user = self.request.user
         return get_object_or_404(Profile, user=user)
