@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework import serializers
 
-from bbbs.common.models import City, Profile
+from bbbs.common.models import City, Profile, Tag
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -35,3 +35,10 @@ class ProfileSerializer(serializers.ModelSerializer):
                 {'FieldError': 'У наставника может быть только один город.'}
             )
         return attrs
+        fields = serializers.ALL_FIELDS
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = serializers.ALL_FIELDS

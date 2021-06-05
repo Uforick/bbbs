@@ -1,5 +1,8 @@
 # Этапы разработки
 [Бекенд первый этап](docs/backend-step1.md)
+
+[Бекенд второй этап](docs/backend-step2.md)
+
 # Swagger
 https://editor.swagger.io/?url=https://raw.githubusercontent.com/GasheK/bbbs/master/docs/swagger.json
 # Примеры запросов
@@ -190,7 +193,8 @@ curl --location --request GET 'http://127.0.0.1:8000/api/v1/profile/' \
         "title": "Эфир с выпускником нашей программы",
         "info": "Иван Рустаев, выпускник программы",
         "link": "https://youtu.be/H980rXfjdq4",
-        "imageUrl": "https://picsum.photos/1199/675"
+        "imageUrl": "https://picsum.photos/1199/675",
+        "duration": 134
     },
     "questions": [
         {
