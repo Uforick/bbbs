@@ -8,7 +8,7 @@ from bbbs.common.serializers import (CitySerializer,
 
 
 class CityList(generics.ListAPIView):
-    queryset = City.objects.all().order_by('-is_primary')
+    queryset = City.objects.all()
     serializer_class = CitySerializer
     pagination_class = None
 
@@ -23,6 +23,6 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
 
 class TagList(generics.ListAPIView):
-    queryset = Tag.objects.all().order_by('-name')
+    queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = None

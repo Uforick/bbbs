@@ -6,14 +6,12 @@ from bbbs.common.models import City, Profile, Tag
 
 
 class CitySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = City
         fields = serializers.ALL_FIELDS
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Profile
         exclude = ('role',)
@@ -41,12 +39,3 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = serializers.ALL_FIELDS
-
-    def validate(self, attrs):
-        profile = get_object_or_404(Profile, user=self.context['request'].user)
-        cities = self.context['request'].data.getlist('city')
-        if len(cities) > 1 and profile.is_mentor:
-            raise serializers.ValidationError(
-                {'FieldError': 'У наставника может быть только один город.'}
-            )
-        return attrs

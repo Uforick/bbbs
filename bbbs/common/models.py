@@ -90,7 +90,7 @@ class Profile(models.Model):
     def is_admin(self):
         """Returns True if user has role admin."""
         return self.role == self.PermissionChoice.ADMIN \
-                or self.user.is_staff
+              or self.user.is_staff
 
 
 @receiver(post_save, sender=Profile)
@@ -147,7 +147,7 @@ class Tag(models.Model):
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+        ordering = ('-name',)
 
     def __str__(self):
         return self.name
-
