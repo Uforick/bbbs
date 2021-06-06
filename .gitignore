@@ -151,3 +151,8 @@ dmypy.json
 static/
 posts/static/
 media/
+<<<<<<< HEAD
+=======
+req_praktikum.txt
+.vscode/
+>>>>>>> 962435347c5b5ab816386e085534f5d86567509a

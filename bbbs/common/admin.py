@@ -4,8 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
 from bbbs.common.forms import ProfileAdminForm
-from bbbs.common.models import City, Profile
-from bbbs.common.forms import ProfileAdminForm
+from bbbs.common.models import City, Profile, Tag
 
 
 User = get_user_model()
@@ -28,8 +27,8 @@ class ProfileAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
     def get_cities(self, obj):
-        qs =  Profile.objects.filter(
-            pk=obj.pk, city__isnull = False
+        qs = Profile.objects.filter(
+            pk=obj.pk, city__isnull=False
             ).values_list('city__name', flat=True)
         if qs:
             return list(qs)
@@ -56,3 +55,4 @@ admin.site.unregister(Group)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Tag)

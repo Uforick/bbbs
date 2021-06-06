@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MainConfig(AppConfig):
+class RightsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'bbbs.main'
+    name = 'bbbs.rights'
