@@ -6,14 +6,12 @@ from bbbs.common.models import City, Profile, Tag
 
 
 class CitySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = City
         fields = serializers.ALL_FIELDS
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Profile
         exclude = ('role',)
@@ -35,7 +33,6 @@ class ProfileSerializer(serializers.ModelSerializer):
                 {'FieldError': 'У наставника может быть только один город.'}
             )
         return attrs
-        fields = serializers.ALL_FIELDS
 
 
 class TagSerializer(serializers.ModelSerializer):

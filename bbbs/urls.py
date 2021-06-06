@@ -55,8 +55,8 @@ urlpatterns = [
     # path('api/v1/main/', MainView.as_view()),
     # path('api/v1/afisha/events/', EventList.as_view()),
     # path('api/v1/afisha/event-participants/', EventParticipantList.as_view()),
-    # path('api/v1/places/', PlaceList.as_view()),
-    # path('api/v1/place/', PlaceView.as_view()),
+    path('api/v1/places/', PlaceList.as_view()),
+    path('api/v1/place/', PlaceView.as_view()),
     # path('api/v1/rights/', RightList.as_view()),
 
 ]

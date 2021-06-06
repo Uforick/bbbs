@@ -73,25 +73,25 @@ class Profile(models.Model):
     def is_mentor(self):
         """Returns True if user has role mentor."""
         return self.role == self.PermissionChoice.MENTOR
-            
+
     @property
     def is_moderator(self):
         """Returns True if user has role moderator."""
         return self.role == self.PermissionChoice.MODERATOR
-        
+
 
     @property
     def is_region_moderator(self):
         """Returns True if user has role region moderator."""
         return self.role == self.PermissionChoice.REGION_MODERATOR
-           
+
 
     @property
     def is_admin(self):
         """Returns True if user has role admin."""
         return self.role == self.PermissionChoice.ADMIN \
-                or self.user.is_staff
-        
+              or self.user.is_staff
+
 
 @receiver(post_save, sender=Profile)
 def change_user_profile_role(sender, **kwargs):
@@ -147,7 +147,7 @@ class Tag(models.Model):
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+        ordering = ('-name',)
 
     def __str__(self):
         return self.name
-
