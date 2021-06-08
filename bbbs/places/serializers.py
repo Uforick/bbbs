@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Place
+from .models import Place, Tag
 
 
 class InfoField(serializers.Field):
@@ -28,4 +28,10 @@ class PlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
+        fields = serializers.ALL_FIELDS
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
         fields = serializers.ALL_FIELDS

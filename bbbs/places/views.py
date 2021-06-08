@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework import pagination
 
-from .models import Place
-from .serializers import PlaceListSerializer, PlaceSerializer
+from .models import Place, Tag
+from .serializers import PlaceListSerializer, PlaceSerializer, TagSerializer
 from .generics import CreateUpdateAPIView
 from bbbs.common.models import User
 
@@ -28,3 +28,10 @@ class PlaceList(generics.ListAPIView):
 class PlaceView(CreateUpdateAPIView):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
+
+
+class PlaceTagList(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    print(queryset)
+    serializer_class = TagSerializer
+    pagination_class = None

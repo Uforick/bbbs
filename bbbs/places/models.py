@@ -1,7 +1,20 @@
 from django.db import models
 from django.utils.translation import gettext_lazy
 
-from bbbs.common.models import Tag, City
+from bbbs.common.models import City
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+        ordering = ('-name',)
+
+    def __str__(self):
+        return self.name
 
 
 class Place(models.Model):
