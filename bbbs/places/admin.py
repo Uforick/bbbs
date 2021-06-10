@@ -30,5 +30,4 @@ class TagAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Tag, TagAdmin)
-
 admin.site.register(Place, PlaceAdmin)
