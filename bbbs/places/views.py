@@ -3,7 +3,9 @@ from rest_framework import generics
 from rest_framework import pagination
 
 from .models import Place, Tag
-from .serializers import PlaceListSerializer, PlaceSerializer, TagSerializer
+from .serializers import (PlaceListSerializer,
+                          PlacePostSerializer,
+                          TagSerializer,)
 from .generics import CreateUpdateAPIView
 from bbbs.common.models import User
 
@@ -27,11 +29,10 @@ class PlaceList(generics.ListAPIView):
 
 class PlaceView(CreateUpdateAPIView):
     queryset = Place.objects.all()
-    serializer_class = PlaceSerializer
+    serializer_class = PlacePostSerializer
 
 
 class PlaceTagList(generics.ListAPIView):
     queryset = Tag.objects.all()
-    print(queryset)
     serializer_class = TagSerializer
     pagination_class = None

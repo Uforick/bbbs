@@ -24,7 +24,7 @@ class PlaceListSerializer(serializers.ModelSerializer):
         return obj.get_gender_display()
 
 
-class PlaceSerializer(serializers.ModelSerializer):
+class PlacePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
