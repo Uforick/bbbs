@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Place
+from .models import Place, Tag
 
 
 class InfoField(serializers.Field):
@@ -13,7 +13,7 @@ class InfoField(serializers.Field):
         return display
 
 
-class PlaceSerializer(serializers.ModelSerializer):
+class PlaceListSerializer(serializers.ModelSerializer):
     info = InfoField(source="*")
 
     class Meta:
@@ -22,3 +22,16 @@ class PlaceSerializer(serializers.ModelSerializer):
 
     def get_gender(self, obj):
         return obj.get_gender_display()
+
+
+class PlacePostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Place
+        fields = serializers.ALL_FIELDS
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = serializers.ALL_FIELDS

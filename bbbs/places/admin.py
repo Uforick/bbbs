@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Place
+from .models import Place, Tag
 
 
 class PlaceAdmin(admin.ModelAdmin):
@@ -22,4 +22,12 @@ class PlaceAdmin(admin.ModelAdmin):
     get_tags.short_description = 'Теги'
 
 
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    search_fields = ('name',)
+    list_filter = ('slug',)
+    empty_value_display = '-пусто-'
+
+
+admin.site.register(Tag, TagAdmin)
 admin.site.register(Place, PlaceAdmin)
