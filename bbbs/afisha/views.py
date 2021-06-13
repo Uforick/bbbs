@@ -15,10 +15,13 @@ class EventList(generics.ListAPIView):
         if self.request.user.is_superuser:
             events = Event.objects.all()
         elif self.request.user.is_authenticated:
-            self_profile = generics.get_object_or_404(Profile, user = self.request.user)
-            events = Event.objects.filter(city__in = self_profile.get_city)
+            self_profile = generics.get_object_or_404(
+                Profile, user=self.request.user)
+            events = Event.objects.filter(
+                city__in=self_profile.user_cities)
         elif not self.request.user.is_authenticated:
-            events = Event.objects.filter(city=self.request.GET.get('city'))
+            events = Event.objects.filter(
+                city=self.request.query_params.get('city'))
         return events
 
 
@@ -36,5 +39,4 @@ class EventParticipantList(generics.ListCreateAPIView,
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_queryset(self):
-        user = self.request.user
-        return EventParticipant.objects.filter(user=user)
+        return self.request.user.event_user.all()

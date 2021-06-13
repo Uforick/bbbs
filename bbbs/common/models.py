@@ -59,7 +59,7 @@ class Profile(models.Model):
     city = models.ManyToManyField(
         City,
         help_text='Выберите один или несколько городов.<br>',
-        related_name='profile_city',
+        related_name='profiles',
         verbose_name='Город'
     )
 
@@ -73,37 +73,31 @@ class Profile(models.Model):
         ordering = ('user__username',)
 
     @property
-    def get_city(self):
+    def user_cities(self):
         return self.city.all()
 
     @property
     def is_mentor(self):
         """Returns True if user has role mentor."""
-        if self.role == self.PermissionChoice.MENTOR:
-            return True
-        return False
+        return self.role == self.PermissionChoice.MENTOR
 
     @property
     def is_moderator(self):
         """Returns True if user has role moderator."""
-        if self.role == self.PermissionChoice.MODERATOR:
-            return True
-        return False
+        return self.role == self.PermissionChoice.MODERATOR
+
 
     @property
     def is_region_moderator(self):
         """Returns True if user has role region moderator."""
-        if self.role == self.PermissionChoice.REGION_MODERATOR:
-            return True
-        return False
+        return self.role == self.PermissionChoice.REGION_MODERATOR
+
 
     @property
     def is_admin(self):
         """Returns True if user has role admin."""
-        if self.role == self.PermissionChoice.ADMIN \
-                or self.user.is_staff is True:
-            return True
-        return False
+        return self.role == self.PermissionChoice.ADMIN \
+              or self.user.is_staff
 
 
 @receiver(post_save, sender=Profile)
@@ -116,14 +110,14 @@ def change_user_profile_role(sender, **kwargs):
     all_perms_user = Permission.objects.filter(codename__endswith='user')
 
     # полные разрешения на Event, City, Profile, User
-    if instance.role == 'ADMIN':
+    if instance.role == Profile.PermissionChoice.ADMIN:
         user.user_permissions.clear()
         user.user_permissions.add(*all_perms_event)
         user.user_permissions.add(*all_perms_сity)
         user.user_permissions.add(*all_perms_profile)
         user.user_permissions.add(*all_perms_user)
 
-    elif instance.role == 'MODERATOR':
+    elif instance.role == Profile.PermissionChoice.MODERATOR:
         can_view_all_models = Permission.objects.filter(
             codename__startswith='view_'
         )
@@ -133,12 +127,13 @@ def change_user_profile_role(sender, **kwargs):
             *all_perms_сity
         )
 
-    elif instance.role == 'REGION_MODERATOR':
+    elif instance.role == Profile.PermissionChoice.REGION_MODERATOR:
         user.user_permissions.set(
             all_perms_event
         )
 
-    elif instance.role == 'MENTOR' and user.is_superuser is False:
+    elif instance.role == Profile.PermissionChoice.MENTOR \
+        and not user.is_superuser:
         user.user_permissions.clear()
         user.is_staff = False
         user.save()
@@ -150,3 +145,16 @@ def create_profile(sender, **kwargs):
     if kwargs.get('created'):
         instance.is_stuff = False
         Profile.objects.create(user=instance)
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+        ordering = ('-name',)
+
+    def __str__(self):
+        return self.name

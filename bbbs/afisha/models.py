@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
-from bbbs.afisha.validators import PositiveSeatsValueValidator
 from bbbs.common.models import City
 
 User = get_user_model()
@@ -41,9 +40,8 @@ class Event(models.Model):
         verbose_name='Окончание',
         help_text='Укажите, дату и время окончания события',
     )
-    seats = models.IntegerField(
+    seats = models.PositiveIntegerField(
         verbose_name='Кол-во мест',
-        validators=[PositiveSeatsValueValidator()],
         help_text='Укажите, количество посадочных мест',
     )
     city = models.ForeignKey(
