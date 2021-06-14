@@ -46,7 +46,6 @@ urlpatterns = [
 
     path('api/v1/places/', PlaceListView.as_view()),
     path('api/v1/place/', PlacePostUpdateView.as_view()),
-
     path('api/v1/places/tags/', PlaceTagList.as_view()),
 
     path('api/v1/rights/', RightList.as_view()),
