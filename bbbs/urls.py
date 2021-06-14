@@ -8,7 +8,7 @@ from bbbs.afisha.views import EventList, EventParticipantList
 from bbbs.questions.views import QuestionsList, QuestionView
 from bbbs.common.views import CityList, ProfileView, TagList
 from bbbs.main.views import MainView
-from bbbs.places.views import PlaceList, PlaceView, PlaceTagList
+from bbbs.places.views import PlaceListView, PlacePostUpdateView, PlaceTagList
 from bbbs.rights.views import RightList, RightView
 
 schema_view = get_schema_view(
@@ -44,8 +44,9 @@ urlpatterns = [
     path('api/v1/afisha/events/', EventList.as_view()),
     path('api/v1/afisha/event-participants/', EventParticipantList.as_view()),
 
-    path('api/v1/places/', PlaceList.as_view()),
-    path('api/v1/place/', PlaceView.as_view()),
+    path('api/v1/places/', PlaceListView.as_view()),
+    path('api/v1/place/', PlacePostUpdateView.as_view()),
+
     path('api/v1/places/tags/', PlaceTagList.as_view()),
 
     path('api/v1/rights/', RightList.as_view()),
