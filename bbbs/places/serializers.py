@@ -18,7 +18,7 @@ class PlaceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        exclude = ("age", "gender", "activity_type", "tag",)
+        exclude = ("age", "gender", "activity_type", "tag", "verified")
 
     def get_gender(self, obj):
         return obj.get_gender_display()
