@@ -75,6 +75,7 @@ class Place(models.Model):
         blank=True,
         upload_to="places/",
     )
+    verified = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Место - куда пойти?"
