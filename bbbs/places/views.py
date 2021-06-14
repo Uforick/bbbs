@@ -13,13 +13,12 @@ from bbbs.common.models import User
 class PlaceList(generics.ListAPIView):
     serializer_class = PlaceListSerializer
     pagination_class = pagination.PageNumberPagination
+    # Добавить фильтр по тегам.
 
     def get_queryset(self):
         places = None
-        tags = self.request.data.get('tag') # Выбранные теги (что по умолчанию?)
         if self.request.user.is_authenticated:
             user = get_object_or_404(User, username=self.request.user.username)
-            # tag__slug__in = tags .(distinct)
             places = Place.objects.filter(city=user.city)
         else:
             # Может вынести самый главный город(Москва) в .env??
@@ -30,6 +29,7 @@ class PlaceList(generics.ListAPIView):
 class PlaceView(CreateUpdateAPIView):
     queryset = Place.objects.all()
     serializer_class = PlacePostSerializer
+    # Пока не понятно, что тут делать..
 
 
 class PlaceTagList(generics.ListAPIView):
