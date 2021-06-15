@@ -1,15 +1,24 @@
 from rest_framework import serializers
 
-from bbbs.questions.models import Question
+from .models import Question, Tag
 
 
-class QuestionGetSerializer(serializers.ModelSerializer):
+class QuestionListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Question
-        fields = serializers.ALL_FIELDS
+        exclude = ('verified',)
 
 
-class QuestionPostSerializer(serializers.ModelSerializer):
+class QuestionViewPostSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Question
         fields = ('id', 'question')
+
+
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = ('id', 'name', 'slug')

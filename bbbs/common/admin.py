@@ -27,11 +27,6 @@ class ProfileAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     
     def get_cities(self, obj):
-        return ', '.join([city.name for city in obj.city.all()])
-
-    get_cities.short_description = 'Города'
-
-    def get_cities(self, obj):
         qs = Profile.objects.filter(
             pk=obj.pk, city__isnull=False
             ).values_list('city__name', flat=True)

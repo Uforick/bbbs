@@ -1,22 +1,38 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework import pagination
 
-from bbbs.questions.models import Question
-from bbbs.questions.serializers import (
-    QuestionGetSerializer,
-    QuestionPostSerializer
-)
+from .filters import QuestionFilter
+from .models import Question, Tag
+from .serializers import (QuestionListSerializer,
+                          QuestionViewPostSerializer,
+                          TagSerializer)
 
 
-class QuestionsList(generics.ListAPIView):
+class QuestionList(generics.ListAPIView):
     queryset = Question.objects.all()
+    serializer_class = QuestionListSerializer
+    pagination_class = pagination.PageNumberPagination
+    filterset_class = QuestionFilter
 
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            return QuestionGetSerializer
-        else:
-            return QuestionPostSerializer
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(verified=True)
 
 
-class QuestionView(generics.RetrieveUpdateAPIView):
+class QuestionViewPost(generics.CreateAPIView,
+                       generics.RetrieveAPIView,
+                       generics.UpdateAPIView,
+                       generics.GenericAPIView):
     queryset = Question.objects.all()
-    serializer_class = QuestionPostSerializer
+    serializer_class = QuestionViewPostSerializer
+    
+    def get_object(self):
+        id = self.request.query_params.get('id')
+        return get_object_or_404(Question, pk=id)
+
+        
+class QuestionTagList(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    pagination_class = None
