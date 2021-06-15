@@ -24,7 +24,7 @@ class PlaceList(generics.ListAPIView):
         else:
             # Может вынести самый главный город(Москва) в .env??
             places = Place.objects.filter(city__name='Москва')
-        return places
+        return places.filter(verified=True)
 
 
 class PlaceView(CreateUpdateAPIView):
