@@ -25,10 +25,9 @@ class PlaceListSerializer(serializers.ModelSerializer):
 
 
 class PlacePostSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Place
-        fields = serializers.ALL_FIELDS
+        exclude = ("tag", "verified")
 
 
 class TagSerializer(serializers.ModelSerializer):

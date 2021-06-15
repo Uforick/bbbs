@@ -1,3 +1,4 @@
+from bbbs.common.models import Profile
 from django.contrib import admin
 
 from .models import Place, Tag
@@ -12,10 +13,15 @@ class PlaceAdmin(admin.ModelAdmin):
     list_filter = ('chosen', 'activity_type')
     empty_value_display = '-пусто-'
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        user_profile = Profile.objects.get(user=request.user)
+        if user_profile.role == Profile.PermissionChoice.REGION_MODERATOR:
+            return qs.filter(city__in=user_profile.user_cities)
+        return qs
+
     def get_tags(self, obj):
-        qs = Place.objects.filter(
-            pk=obj.pk, tag__isnull=False
-            ).values_list('tag__name', flat=True)
+        qs = obj.list_tags()
         if qs:
             return list(qs)
 
