@@ -27,6 +27,11 @@ class Place(models.Model):
         ENTERTAINING = 1, gettext_lazy("Развлекательный")
         INFORMATIVE = 2, gettext_lazy("Познавательный")
 
+    verified = models.BooleanField(
+        default=False,
+        verbose_name='Показать на главной',
+        help_text='Установить флаг, если проверено для публикации',
+    )
     chosen = models.BooleanField(
         verbose_name="Выбор наставника",
         default=False,
@@ -75,9 +80,9 @@ class Place(models.Model):
         blank=True,
         upload_to="places/",
     )
-    verified = models.BooleanField(default=False)
 
     class Meta:
+        ordering = ('title',)
         verbose_name = "Место - куда пойти?"
         verbose_name_plural = "Места - куда пойти?"
 
@@ -89,3 +94,6 @@ class Place(models.Model):
 
     def get_activity_type(self, type_code):
         return self.ActivityTypes(type_code).label
+
+    def list_tags(self):
+        return self.tag.values_list('name', flat=True)

@@ -7,7 +7,7 @@ from .serializers import (PlaceListSerializer,
 from .models import Place, Tag
 from .filters import PlaceFilter
 from .generics import CreateRetrieveAPIView
-from bbbs.common.models import User
+from bbbs.common.models import Profile
 
 
 class PlaceListView(generics.ListAPIView):
@@ -18,8 +18,9 @@ class PlaceListView(generics.ListAPIView):
     def get_queryset(self):
         places = None
         if self.request.user.is_authenticated:
-            user = get_object_or_404(User, username=self.request.user.username)
-            places = Place.objects.filter(city=user.city, verified=True)
+            user = get_object_or_404(Profile, user=self.request.user)
+            places = Place.objects.filter(city__name=user.user_cities[0],
+                                          verified=True)
         else:
             # Может вынести самый главный город(Москва) в .env??
             places = Place.objects.filter(city__name='Москва', verified=True)
@@ -28,7 +29,7 @@ class PlaceListView(generics.ListAPIView):
 
 class PlacePostUpdateView(CreateRetrieveAPIView):
     serializer_class = PlacePostSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    #permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
         id = self.request.query_params.get('id')

@@ -5,7 +5,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework_simplejwt import views as jwt_views
 
 from bbbs.afisha.views import EventList, EventParticipantList
-from bbbs.questions.views import QuestionsList, QuestionView
+from bbbs.questions.views import QuestionList, QuestionViewPost
 from bbbs.common.views import CityList, ProfileView, TagList
 from bbbs.main.views import MainView
 from bbbs.places.views import PlaceListView, PlacePostUpdateView, PlaceTagList
@@ -34,8 +34,8 @@ urlpatterns = [
     path('api/v1/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 
-    path('api/v1/questions/', QuestionsList.as_view()),
-    path('api/v1/question/', QuestionView.as_view()),
+    path('api/v1/questions/', QuestionList.as_view()),
+    path('api/v1/question/', QuestionViewPost.as_view()),
     path('api/v1/questions/tags/', TagList.as_view()),
 
     path('api/v1/cities/', CityList.as_view()),
