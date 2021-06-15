@@ -14,5 +14,6 @@ class QuestionFilter(django_filters.FilterSet):
         fields = ('search',)
 
     def filter_tags(self, queryset, field_name, values):
-        # берем Question потому, что в queryset будет только "verified":true
-        return Question.objects.filter(tag__slug__in=values)
+        if values:
+            return Question.objects.filter(tag__slug__in=values)
+        return queryset
