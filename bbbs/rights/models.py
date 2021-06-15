@@ -19,7 +19,8 @@ class Right(models.Model):
     description = models.CharField(max_length=500, verbose_name='Описание')
     text = models.TextField(verbose_name='Текст')
     color = models.CharField(max_length=50, verbose_name='Цвет')
-    image = models.ImageField(blank=True, verbose_name='Картинка')
+    image = models.ImageField(blank=True, verbose_name='Картинка',
+                              upload_to='rights/')
     tag = models.ManyToManyField(RightTag, verbose_name='Теги',
                                  related_name='rights')
 
