@@ -17,7 +17,6 @@ from bbbs.places.serializers import PlaceListSerializer
 from bbbs.rights.serializers import RightSerializer
 
 
-
 class MainView(APIView):
 
     def get(self, request):
@@ -63,3 +62,5 @@ class MainView(APIView):
             'video': [], # 1
             'questions': questions_serializer.data, # не все, а несколько (доделать!)
         })
+
+        

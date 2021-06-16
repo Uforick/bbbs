@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'bbbs.places',
     'bbbs.rights',
     'bbbs.questions',
+    'django_filters', 
 ]
 
 MIDDLEWARE = [

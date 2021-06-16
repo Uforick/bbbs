@@ -30,5 +30,6 @@ class EventAdmin(admin.ModelAdmin):
 
     get_taken_seats.short_description = 'Кол-во занятых мест'
 
+    get_taken_seats.short_description = 'Кол-во занятых мест'
 
 admin.site.register(Event, EventAdmin)
