@@ -2,6 +2,16 @@ from bbbs.common.models import Profile
 from django.contrib import admin
 
 from .models import Place, Tag
+from bbbs.questions.admin import TagAdmin
+
+
+class PlaceTagInline(admin.TabularInline):
+    model = Place.tag.through
+    extra = 1
+    min_num = 1
+
+    verbose_name = 'Тег'
+    verbose_name_plural = 'Теги'
 
 
 class PlaceAdmin(admin.ModelAdmin):
@@ -12,6 +22,8 @@ class PlaceAdmin(admin.ModelAdmin):
     search_fields = ('title', 'address', 'tag')
     list_filter = ('chosen', 'activity_type')
     empty_value_display = '-пусто-'
+    exclude = ('tag',)
+    inlines = (PlaceTagInline,)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -26,13 +38,6 @@ class PlaceAdmin(admin.ModelAdmin):
             return list(qs)
 
     get_tags.short_description = 'Теги'
-
-
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    search_fields = ('name',)
-    list_filter = ('slug',)
-    empty_value_display = '-пусто-'
 
 
 admin.site.register(Tag, TagAdmin)

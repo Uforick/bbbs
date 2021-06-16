@@ -22,11 +22,11 @@ class MainView(APIView):
         if request.user.is_authenticated:
             city = request.user.profile.city.first()
             events = city.events.all()
-            places = city.place_set.filter(verified=True)
+            places = city.place_set.filter(show_on_main_page=True)
         else:
             events = None
             places = Place.objects.filter(city__name=DEFAULT_CITY,
-                                          verified=True)
+                                          show_on_main_page=True)
 
         questions = Question.objects.filter(show_on_main_page=True)
         rights = Right.objects.filter(show_on_main_page=True)

@@ -4,8 +4,8 @@ from .models import Question
 
 
 class QuestionFilter(django_filters.FilterSet):
-    search= django_filters.BaseCSVFilter( 
-        field_name = 'tag__slug',
+    search = django_filters.BaseCSVFilter(
+        field_name='tag__slug',
         method='filter_tags'
     )
 
