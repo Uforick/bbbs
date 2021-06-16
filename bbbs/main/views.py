@@ -28,7 +28,7 @@ class MainView(APIView):
             places = Place.objects.filter(city__name=DEFAULT_CITY,
                                           verified=True)
 
-        questions = Question.objects.filter(verified=True)
+        questions = Question.objects.filter(show_on_main_page=True)
         rights = Right.objects.filter(show_on_main_page=True)
 
         questions_serializer = QuestionListSerializer(questions, many=True)
