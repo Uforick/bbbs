@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path
 from drf_yasg import openapi
@@ -55,3 +57,10 @@ urlpatterns = [
    path('api/v1/right/', RightView.as_view()),
    path('api/v1/rights/tags/', RightTagList.as_view()),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
