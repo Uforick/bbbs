@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
     'bbbs.afisha',
     'bbbs.common',
     'bbbs.main',
@@ -122,7 +123,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     'DEFAULT_FILTER_BACKENDS': [
             'django_filters.rest_framework.DjangoFilterBackend',
-        ],
+    ],
 }
 
 SIMPLE_JWT = {

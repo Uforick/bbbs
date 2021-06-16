@@ -1,35 +1,41 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics
-from rest_framework import pagination
+from rest_framework import generics, pagination, permissions
 
-from .models import Place, Tag
 from .serializers import (PlaceListSerializer,
                           PlacePostSerializer,
                           TagSerializer,)
-from .generics import CreateUpdateAPIView
-from bbbs.common.models import User
+from .models import Place, Tag
+from .filters import PlaceFilter
+from .generics import CreateRetrieveAPIView
+from bbbs.common.models import Profile
 
 
-class PlaceList(generics.ListAPIView):
+class PlaceListView(generics.ListAPIView):
     serializer_class = PlaceListSerializer
     pagination_class = pagination.PageNumberPagination
+    filterset_class = PlaceFilter
 
     def get_queryset(self):
         places = None
-        tags = self.request.data.get('tag') # Выбранные теги (что по умолчанию?)
         if self.request.user.is_authenticated:
-            user = get_object_or_404(User, username=self.request.user.username)
-            # tag__slug__in = tags .(distinct)
-            places = Place.objects.filter(city=user.city)
+            user = get_object_or_404(Profile, user=self.request.user)
+            places = Place.objects.filter(city__name=user.user_cities[0],
+                                          verified=True)
         else:
             # Может вынести самый главный город(Москва) в .env??
-            places = Place.objects.filter(city__name='Москва')
-        return places.filter(verified=True)
+            places = Place.objects.filter(city__name='Москва', verified=True)
+        return places
 
 
-class PlaceView(CreateUpdateAPIView):
-    queryset = Place.objects.all()
+class PlacePostUpdateView(CreateRetrieveAPIView):
     serializer_class = PlacePostSerializer
+    #permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self):
+        id = self.request.query_params.get('id')
+        if id:
+            return get_object_or_404(Place, pk=id)
+        return None
 
 
 class PlaceTagList(generics.ListAPIView):

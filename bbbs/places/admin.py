@@ -21,9 +21,7 @@ class PlaceAdmin(admin.ModelAdmin):
         return qs
 
     def get_tags(self, obj):
-        qs = Place.objects.filter(
-            pk=obj.pk, tag__isnull=False
-            ).values_list('tag__name', flat=True)
+        qs = obj.list_tags()
         if qs:
             return list(qs)
 

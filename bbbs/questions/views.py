@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework import pagination
 
 from .filters import QuestionFilter
 from .models import Question, Tag
@@ -24,12 +25,11 @@ class QuestionViewPost(generics.CreateAPIView,
                        generics.GenericAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionViewPostSerializer
-    
+
     def get_object(self):
         id = self.request.query_params.get('id')
         return get_object_or_404(Question, pk=id)
-
-        
+  
 class QuestionTagList(generics.ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

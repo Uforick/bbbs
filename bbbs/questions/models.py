@@ -17,6 +17,7 @@ class Tag(models.Model):
         blank=True,
         null=True
     )
+
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
@@ -45,6 +46,7 @@ class Question(models.Model):
     )
     question = models.CharField(
         max_length=500, 
+
         unique=True,
         verbose_name='Вопрос'
     )
