@@ -6,6 +6,9 @@ from bbbs.afisha.models import Event, EventParticipant
 from bbbs.afisha.validators import (AvailableSeatsValidator,
                                     EventStartedValidator)
 
+from bbbs.afisha.validators import (AvailableSeatsValidator,
+                                    EventStartedValidator)
+
 
 class EventSerializer(serializers.ModelSerializer):
     booked = serializers.SerializerMethodField('get_booked')

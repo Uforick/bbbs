@@ -4,8 +4,8 @@ from .models import Question
 
 
 class QuestionFilter(django_filters.FilterSet):
-    search = django_filters.BaseCSVFilter(
-        field_name='tag__slug',
+    search= django_filters.BaseCSVFilter( 
+        field_name = 'tag__slug',
         method='filter_tags'
     )
 
@@ -14,5 +14,8 @@ class QuestionFilter(django_filters.FilterSet):
         fields = ('search',)
 
     def filter_tags(self, queryset, field_name, values):
-        # берем Question потому, что в queryset будет только "verified":true
-        return Question.objects.filter(tag__slug__in=values)
+        if values:
+            for value in values:
+                queryset = queryset.filter(tag__slug=value)
+
+        return queryset

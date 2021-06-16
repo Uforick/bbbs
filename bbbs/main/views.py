@@ -7,7 +7,6 @@ from rest_framework.response import Response
 
 from bbbs.questions.models import Question
 from bbbs.places.models import Place
-from bbbs.rights.models import Right
 
 from bbbs.afisha.serializers import EventSerializer
 from bbbs.questions.serializers import QuestionListSerializer
