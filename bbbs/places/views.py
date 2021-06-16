@@ -14,7 +14,6 @@ DEFAULT_CITY = 'Москва'
 
 class PlaceListView(generics.ListAPIView):
     serializer_class = PlaceListSerializer
-    pagination_class = pagination.PageNumberPagination
     filterset_class = PlaceFilter
 
     def get_queryset(self):
@@ -29,7 +28,7 @@ class PlaceListView(generics.ListAPIView):
 
 class PlacePostUpdateView(CreateRetrieveAPIView):
     serializer_class = PlacePostSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         id = self.request.query_params.get('id')
