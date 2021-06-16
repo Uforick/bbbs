@@ -14,7 +14,7 @@ class RightList(generics.ListAPIView):
 
 
 class RightView(generics.RetrieveAPIView):
-    serializer_class = RightListSerializer
+    serializer_class = RightSerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = None
 
