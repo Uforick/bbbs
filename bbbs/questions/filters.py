@@ -15,5 +15,7 @@ class QuestionFilter(django_filters.FilterSet):
 
     def filter_tags(self, queryset, field_name, values):
         if values:
-            return Question.objects.filter(tag__slug__in=values)
+            for value in values:
+                queryset = queryset.filter(tag__slug=value)
+
         return queryset
