@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import filters, generics, permissions
 
 from bbbs.rights.models import Right, RightTag
-from bbbs.rights.serializers import RightListSerializer, RightTagSerializer
+from bbbs.rights.serializers import RightSerializer, RightTagSerializer
 
 
 class RightList(generics.ListAPIView):
