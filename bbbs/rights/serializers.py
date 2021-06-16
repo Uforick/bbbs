@@ -3,7 +3,7 @@ from rest_framework import serializers
 from bbbs.rights.models import Right, RightTag
 
 
-class RightListSerializer(serializers.ModelSerializer):
+class RightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Right
         exclude = ['show_on_main_page']
