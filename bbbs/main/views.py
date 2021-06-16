@@ -1,12 +1,9 @@
-from random import choice
-
-from django.shortcuts import get_object_or_404
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from bbbs.questions.models import Question
 from bbbs.places.models import Place
+from bbbs.rights.models import Right
 
 from bbbs.afisha.serializers import EventSerializer
 from bbbs.questions.serializers import QuestionListSerializer
