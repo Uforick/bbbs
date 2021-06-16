@@ -7,7 +7,7 @@ from bbbs.rights.serializers import RightSerializer, RightTagSerializer
 
 class RightList(generics.ListAPIView):
     queryset = Right.objects.all()
-    serializer_class = RightListSerializer
+    serializer_class = RightSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [filters.SearchFilter]
     search_fields = ['=tag__name']
