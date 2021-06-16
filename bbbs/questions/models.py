@@ -1,7 +1,5 @@
 from django.db import models
 
-from pytils.translit import slugify
-
 
 class Tag(models.Model):
     name = models.CharField(
@@ -13,7 +11,7 @@ class Tag(models.Model):
     slug = models.SlugField(
         verbose_name='Ссылка',
         help_text='Заполняется автоматически',
-        auto_created=True,
+        unique=True,
         blank=True,
         null=True
     )
@@ -26,13 +24,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
 
 class Question(models.Model):
-    verified = models.BooleanField(
+    show_on_main_page = models.BooleanField(
         default=False,
         verbose_name='Показать на главной',
         help_text='Установить флаг, если проверено для публикации',
@@ -46,6 +40,7 @@ class Question(models.Model):
     )
     question = models.CharField(
         max_length=500,
+
         unique=True,
         verbose_name='Вопрос'
     )

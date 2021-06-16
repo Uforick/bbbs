@@ -27,7 +27,7 @@ class Place(models.Model):
         ENTERTAINING = 1, gettext_lazy("Развлекательный")
         INFORMATIVE = 2, gettext_lazy("Познавательный")
 
-    verified = models.BooleanField(
+    show_on_main_page = models.BooleanField(
         default=False,
         verbose_name='Показать на главной',
         help_text='Установить флаг, если проверено для публикации',
