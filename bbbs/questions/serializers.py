@@ -7,7 +7,7 @@ class QuestionListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        exclude = ('verified',)
+        exclude = ('show_on_main',)
 
 
 class QuestionViewPostSerializer(serializers.ModelSerializer):

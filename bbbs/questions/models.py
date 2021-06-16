@@ -32,7 +32,7 @@ class Tag(models.Model):
 
 
 class Question(models.Model):
-    verified = models.BooleanField(
+    show_on_main = models.BooleanField(
         default = False,
         verbose_name='Показать на главной',
         help_text='Установить флаг, если проверено для публикации',
