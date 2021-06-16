@@ -24,7 +24,10 @@ class Right(models.Model):
     tag = models.ManyToManyField(RightTag, verbose_name='Теги',
                                  related_name='rights')
 
-    show_on_main_page = models.BooleanField(default=False)
+    show_on_main_page = models.BooleanField(
+        default=False,
+        verbose_name='Показать на главной странице'
+    )
 
     class Meta:
         verbose_name = 'Права ребенка'

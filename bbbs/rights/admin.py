@@ -5,9 +5,11 @@ from bbbs.rights.models import Right, RightTag
 
 class RightTagInline(admin.TabularInline):
     model = Right.tag.through
-    raw_id_fields = ('righttag',)
     extra = 1
     min_num = 1
+
+    verbose_name = 'Тег'
+    verbose_name_plural = 'Теги'
 
 
 class RightTagAdmin(admin.ModelAdmin):
