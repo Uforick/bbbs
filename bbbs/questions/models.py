@@ -1,7 +1,5 @@
 from django.db import models
 
-from pytils.translit import slugify
-
 
 class Tag(models.Model):
     name = models.CharField(
@@ -25,10 +23,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
 
 class Question(models.Model):
