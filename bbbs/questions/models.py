@@ -11,7 +11,7 @@ class Tag(models.Model):
     slug = models.SlugField(
         verbose_name='Ссылка',
         help_text='Заполняется автоматически',
-        auto_created=True,
+        unique=True,
         blank=True,
         null=True
     )
@@ -26,7 +26,7 @@ class Tag(models.Model):
 
 
 class Question(models.Model):
-    show_on_main = models.BooleanField(
+    show_on_main_page = models.BooleanField(
         default = False,
         verbose_name='Показать на главной',
         help_text='Установить флаг, если проверено для публикации',

@@ -7,7 +7,7 @@ class QuestionListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        exclude = ('show_on_main',)
+        exclude = ('show_on_main_page',)
 
 
 class QuestionViewPostSerializer(serializers.ModelSerializer):
