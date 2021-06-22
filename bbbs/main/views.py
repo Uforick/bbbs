@@ -1,12 +1,9 @@
-from random import choice
-
-from django.shortcuts import get_object_or_404
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from bbbs.questions.models import Question
 from bbbs.places.models import Place
+from bbbs.rights.models import Right
 
 from bbbs.afisha.serializers import EventSerializer
 from bbbs.questions.serializers import QuestionListSerializer
@@ -25,13 +22,13 @@ class MainView(APIView):
         if request.user.is_authenticated:
             city = request.user.profile.city.first()
             events = city.events.all()
-            places = city.place_set.filter(verified=True)
+            places = city.place_set.filter(show_on_main_page=True)
         else:
             events = None
             places = Place.objects.filter(city__name=DEFAULT_CITY,
-                                          verified=True)
+                                          show_on_main_page=True)
 
-        questions = Question.objects.filter(verified=True)
+        questions = Question.objects.filter(show_on_main_page=True)
         rights = Right.objects.filter(show_on_main_page=True)
 
         questions_serializer = QuestionListSerializer(questions, many=True)

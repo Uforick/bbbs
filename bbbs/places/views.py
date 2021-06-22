@@ -9,27 +9,26 @@ from .filters import PlaceFilter
 from .generics import CreateRetrieveAPIView
 from bbbs.common.models import Profile
 
+DEFAULT_CITY = 'Москва'
+
 
 class PlaceListView(generics.ListAPIView):
     serializer_class = PlaceListSerializer
-    pagination_class = pagination.PageNumberPagination
     filterset_class = PlaceFilter
 
     def get_queryset(self):
         places = None
         if self.request.user.is_authenticated:
             user = get_object_or_404(Profile, user=self.request.user)
-            places = Place.objects.filter(city__name=user.user_cities[0],
-                                          verified=True)
+            places = Place.objects.filter(city__name=user.user_cities[0])
         else:
-            # Может вынести самый главный город(Москва) в .env??
-            places = Place.objects.filter(city__name='Москва', verified=True)
+            places = Place.objects.filter(city__name=DEFAULT_CITY)
         return places
 
 
 class PlacePostUpdateView(CreateRetrieveAPIView):
     serializer_class = PlacePostSerializer
-    #permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         id = self.request.query_params.get('id')

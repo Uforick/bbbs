@@ -5,13 +5,13 @@ class Tag(models.Model):
     name = models.CharField(
         verbose_name='Имя',
         help_text='Введите имя тега',
-        max_length=50, 
+        max_length=50,
         unique=True
     )
     slug = models.SlugField(
         verbose_name='Ссылка',
         help_text='Заполняется автоматически',
-        auto_created=True,
+        unique=True,
         blank=True,
         null=True
     )
@@ -26,8 +26,8 @@ class Tag(models.Model):
 
 
 class Question(models.Model):
-    show_on_main = models.BooleanField(
-        default = False,
+    show_on_main_page = models.BooleanField(
+        default=False,
         verbose_name='Показать на главной',
         help_text='Установить флаг, если проверено для публикации',
     )
@@ -39,7 +39,7 @@ class Question(models.Model):
         blank=True
     )
     question = models.CharField(
-        max_length=500, 
+        max_length=500,
 
         unique=True,
         verbose_name='Вопрос'
