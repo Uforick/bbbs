@@ -20,7 +20,7 @@ class CityAdmin(admin.ModelAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     form = ProfileAdminForm
-    list_display = ('user', 'get_cities')
+    list_display = ('user', 'get_cities', 'role')
     search_fields = ('user', 'city')
     list_filter = ('user', 'city')
     ordering = ('user',)
@@ -36,6 +36,14 @@ class ProfileAdmin(admin.ModelAdmin):
     get_cities.short_description = 'Города'
 
 
+class ProfileInline(admin.TabularInline):
+    model = Profile
+    extra = 1
+
+    verbose_name = 'Профиль'
+    verbose_name_plural = 'Профили'
+
+
 class MyUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
@@ -47,6 +55,7 @@ class MyUserAdmin(UserAdmin):
     list_filter = ('username', 'email')
     ordering = ('username', 'email')
     empty_value_display = '-пусто-'
+    inlines = (ProfileInline,)
 
 
 admin.site.unregister(User)
