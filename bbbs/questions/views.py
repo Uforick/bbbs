@@ -24,7 +24,7 @@ class QuestionViewPost(generics.CreateAPIView,
     def get_object(self):
         id = self.request.query_params.get('id')
         return get_object_or_404(Question, pk=id)
-  
+
 
 class QuestionTagList(generics.ListAPIView):
     queryset = Tag.objects.all()

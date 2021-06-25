@@ -13,19 +13,23 @@ class IsAdmin(permissions.BasePermission):
 class IsRegionModerator(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.profile.is_region_moderator
+        return (request.user.is_authenticated
+                and request.user.profile.is_region_moderator)
 
     def has_object_permission(self, request, view, obj):
-        return request.user.is_authenticated and request.user.profile.is_region_moderator
+        return (request.user.is_authenticated
+                and request.user.profile.is_region_moderator)
 
 
 class IsModerator(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.profile.is_moderator
+        return (request.user.is_authenticated
+                and request.user.profile.is_moderator)
 
     def has_object_permission(self, request, view, obj):
-        return request.user.is_authenticated and request.user.profile.is_moderator
+        return (request.user.is_authenticated
+                and request.user.profile.is_moderator)
 
 
 class IsMentor(permissions.BasePermission):

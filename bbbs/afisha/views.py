@@ -1,7 +1,7 @@
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 
-from bbbs.afisha.models import Event, EventParticipant
+from bbbs.afisha.models import Event
 from bbbs.afisha.permissions import IsMentor
 from bbbs.afisha.serializers import EventParticipantSerializer, EventSerializer
 from bbbs.common.models import Profile
@@ -12,6 +12,7 @@ class EventList(generics.ListAPIView):
     serializer_class = EventSerializer
 
     def get_queryset(self):
+        events = None
         if self.request.user.is_superuser:
             events = Event.objects.all()
         elif self.request.user.is_authenticated:
@@ -22,6 +23,7 @@ class EventList(generics.ListAPIView):
         elif not self.request.user.is_authenticated:
             events = Event.objects.filter(
                 city=self.request.query_params.get('city'))
+
         return events
 
 

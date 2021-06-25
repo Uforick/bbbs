@@ -86,18 +86,16 @@ class Profile(models.Model):
         """Returns True if user has role moderator."""
         return self.role == self.PermissionChoice.MODERATOR
 
-
     @property
     def is_region_moderator(self):
         """Returns True if user has role region moderator."""
         return self.role == self.PermissionChoice.REGION_MODERATOR
 
-
     @property
     def is_admin(self):
         """Returns True if user has role admin."""
-        return self.role == self.PermissionChoice.ADMIN \
-              or self.user.is_staff
+        return (self.role == self.PermissionChoice.ADMIN
+                or self.user.is_staff)
 
 
 @receiver(post_save, sender=Profile)
@@ -132,8 +130,8 @@ def change_user_profile_role(sender, **kwargs):
             all_perms_event
         )
 
-    elif instance.role == Profile.PermissionChoice.MENTOR \
-        and not user.is_superuser:
+    elif (instance.role == Profile.PermissionChoice.MENTOR
+          and not user.is_superuser):
         user.user_permissions.clear()
         user.is_staff = False
         user.save()

@@ -18,16 +18,19 @@ class PlaceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        exclude = ("age", "gender", "activity_type", "tag", "verified")
+        exclude = ("age", "gender", "activity_type",
+                   "tag", "show_on_main_page")
 
     def get_gender(self, obj):
         return obj.get_gender_display()
 
 
 class PlacePostSerializer(serializers.ModelSerializer):
+    tag = serializers.RelatedField(many=True, read_only=True)
+
     class Meta:
         model = Place
-        exclude = ("tag", "verified")
+        exclude = ("show_on_main_page",)
 
 
 class TagSerializer(serializers.ModelSerializer):

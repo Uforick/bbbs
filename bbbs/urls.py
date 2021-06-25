@@ -5,8 +5,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework_simplejwt import views as jwt_views
 
 from bbbs.afisha.views import EventList, EventParticipantList
-from bbbs.questions.views import (QuestionList, 
-                                  QuestionViewPost, 
+from bbbs.questions.views import (QuestionList,
+                                  QuestionViewPost,
                                   QuestionTagList)
 
 from bbbs.common.views import CityList, ProfileView, TagList
