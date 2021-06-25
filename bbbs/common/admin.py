@@ -38,11 +38,12 @@ class ProfileAdmin(admin.ModelAdmin):
 
 class ProfileInline(admin.TabularInline):
     model = Profile
+    form = ProfileAdminForm
     extra = 1
-
+    min_num = 1
     verbose_name = 'Профиль'
     verbose_name_plural = 'Профили'
-
+    
 
 class MyUserAdmin(UserAdmin):
     fieldsets = (

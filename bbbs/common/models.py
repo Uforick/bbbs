@@ -54,7 +54,7 @@ class Profile(models.Model):
         verbose_name='Роль',
         max_length=30,
         choices=PermissionChoice.choices,
-        default=PermissionChoice.MENTOR,
+        default=PermissionChoice.MENTOR
     )
     city = models.ManyToManyField(
         City,
@@ -136,13 +136,16 @@ def change_user_profile_role(sender, **kwargs):
         user.is_staff = False
         user.save()
 
-
-@receiver(post_save, sender=User)
-def create_profile(sender, **kwargs):
-    instance = kwargs.get('instance')
-    if kwargs.get('created'):
-        instance.is_stuff = False
-        Profile.objects.create(user=instance)
+'''
+Отключил из-за переноса функционала создания
+Profile в момент создания пользователя (admin inline)
+'''
+# @receiver(post_save, sender=User)
+# def create_profile(sender, **kwargs):
+#     instance = kwargs.get('instance')
+#     if kwargs.get('created'):
+#         instance.is_stuff = False
+#         Profile.objects.create(user=instance)
 
 
 class Tag(models.Model):
