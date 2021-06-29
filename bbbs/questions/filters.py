@@ -17,5 +17,4 @@ class QuestionFilter(django_filters.FilterSet):
         if values:
             for value in values:
                 queryset = queryset.filter(tag__slug=value)
-
         return queryset

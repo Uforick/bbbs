@@ -12,8 +12,6 @@ class Tag(models.Model):
         verbose_name='Ссылка',
         help_text='Заполняется автоматически',
         unique=True,
-        blank=True,
-        null=True
     )
 
     class Meta:
@@ -36,16 +34,16 @@ class Question(models.Model):
         verbose_name='Тег',
         help_text='Выберите один или несколько тегов',
         related_name='tags',
-        blank=True
     )
     question = models.CharField(
         max_length=500,
-
         unique=True,
-        verbose_name='Вопрос'
+        verbose_name='Вопрос',
+        help_text='Введите текст вопроса'
     )
     answer = models.TextField(
         verbose_name='Ответ на вопрос',
+        help_text='Введите текст ответа',
         blank=True,
         null=True
     )
