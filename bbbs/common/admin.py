@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
 from bbbs.common.forms import ProfileAdminForm
-from bbbs.common.models import City, Profile, Tag
+from bbbs.common.models import City, Profile
 
 
 User = get_user_model()
@@ -13,7 +13,7 @@ User = get_user_model()
 class CityAdmin(admin.ModelAdmin):
     list_display = ('name', 'is_primary')
     search_fields = ('name',)
-    list_filter = ('name', 'is_primary')
+    list_filter = ('is_primary',)
     ordering = ('name',)
     empty_value_display = '-пусто-'
 
@@ -23,7 +23,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'get_cities', 'role')
     search_fields = ('user', 'city')
     list_filter = ('user', 'city')
-    ordering = ('user',)
+    ordering = ('user__username',)
     empty_value_display = '-пусто-'
 
     def get_cities(self, obj):
@@ -65,4 +65,3 @@ admin.site.unregister(Group)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(Tag)

@@ -9,7 +9,7 @@ from bbbs.questions.views import (QuestionList,
                                   QuestionViewPost,
                                   QuestionTagList)
 
-from bbbs.common.views import CityList, ProfileView, TagList
+from bbbs.common.views import CityList, MyTokenObtainPairView, ProfileView
 from bbbs.main.views import MainView
 from bbbs.places.views import PlaceListView, PlacePostUpdateView, PlaceTagList
 from bbbs.rights.views import RightList, RightView, RightTagList
@@ -34,7 +34,7 @@ urlpatterns = [
    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-   path('api/v1/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+   path('api/v1/token/', MyTokenObtainPairView.as_view(), name='my_token_obtain_pair'),
    path('api/v1/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 
    path('api/v1/questions/', QuestionList.as_view()),

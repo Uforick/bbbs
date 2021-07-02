@@ -48,6 +48,7 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User,
         verbose_name='Пользователь',
+        primary_key=True,
         on_delete=models.CASCADE
     )
     role = models.CharField(
@@ -146,16 +147,3 @@ Profile в момент создания пользователя (admin inline)
 #     if kwargs.get('created'):
 #         instance.is_stuff = False
 #         Profile.objects.create(user=instance)
-
-
-class Tag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(max_length=50, unique=True)
-
-    class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
-        ordering = ('-name',)
-
-    def __str__(self):
-        return self.name
