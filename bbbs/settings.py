@@ -31,6 +31,11 @@ INSTALLED_APPS = [
     'bbbs.places',
     'bbbs.rights',
     'bbbs.questions',
+    'bbbs.articles',
+    'bbbs.books',
+    'bbbs.materials',
+    'bbbs.movies',
+    'bbbs.videos',
 ]
 
 MIDDLEWARE = [
