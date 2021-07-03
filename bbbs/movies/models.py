@@ -31,7 +31,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Video(models.Model):
+class Movie(models.Model):
     show_on_main_page = models.BooleanField(
         default=False,
         verbose_name='Показать на главной',
