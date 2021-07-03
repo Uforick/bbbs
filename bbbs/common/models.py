@@ -61,7 +61,7 @@ class Profile(models.Model):
         City,
         help_text='Выберите один или несколько городов.<br>',
         related_name='profiles',
-        verbose_name='Город'
+        verbose_name='Город',
     )
 
     def __str__(self):

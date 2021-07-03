@@ -14,6 +14,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class Article(models.Model):
     show_on_main_page = models.BooleanField(
         default=False,
