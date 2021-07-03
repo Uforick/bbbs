@@ -1,5 +1,8 @@
+import re
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 
 from .filters import QuestionFilter
 from .models import Question, Tag
@@ -16,13 +19,17 @@ class QuestionList(generics.ListAPIView):
 
 class QuestionViewPost(generics.CreateAPIView,
                        generics.RetrieveAPIView,
-                       generics.UpdateAPIView,
                        generics.GenericAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionViewPostSerializer
+    permission_classes = [IsAuthenticated,]
 
     def get_object(self):
-        id = self.request.query_params.get('id')
+        id = self.request.data.get('id')
+        if not id.isdigit():
+            raise ValidationError(
+                'Номер вопроса должен быть положительным целым числом!'
+            )
         return get_object_or_404(Question, pk=id)
 
 

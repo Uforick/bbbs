@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics, permissions
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-from bbbs.common.models import City, Profile, Tag
-from bbbs.common.serializers import (CitySerializer,
-                                     ProfileSerializer, TagSerializer)
+from bbbs.common.models import City, Profile
+from bbbs.common.serializers import (CitySerializer, MyTokenObtainPairSerializer,
+                                     ProfileSerializer)
 
 
 class CityList(generics.ListAPIView):
@@ -22,7 +23,5 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         return get_object_or_404(Profile, user=user)
 
 
-class TagList(generics.ListAPIView):
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
-    pagination_class = None
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer

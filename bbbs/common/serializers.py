@@ -1,9 +1,16 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
+from rest_framework import exceptions
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from bbbs.common.models import City, Profile, Tag
+from bbbs.common.models import City, Profile
 
+
+
+
+User = get_user_model()
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,7 +42,11 @@ class ProfileSerializer(serializers.ModelSerializer):
         return attrs
 
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = serializers.ALL_FIELDS
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        username, password = attrs.values()
+        user_profile = Profile.objects.get(user__username = username)
+        if not user_profile.is_mentor:
+            error_message = "Получить токен можно только с ролью Наставник"
+            raise exceptions.AuthenticationFailed(error_message)
+        return super().validate(attrs)
