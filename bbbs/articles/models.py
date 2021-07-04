@@ -9,10 +9,6 @@ article: {
 '''
 
 from django.db import models
-from django.contrib.auth import get_user_model
-
-
-User = get_user_model()
 
 
 class Article(models.Model):
@@ -25,12 +21,9 @@ class Article(models.Model):
         verbose_name="Название",
         max_length=200,
     )
-    author = models.ForeignKey(
-        User,
-        verbose_name='Автор',
-        on_delete=models.CASCADE,
-        related_name='articles',
-        help_text='Выберите автора'
+    author = models.CharField(
+        verbose_name="Автор",
+        max_length=200,
     )
     link = models.URLField(
         verbose_name="Сайт",

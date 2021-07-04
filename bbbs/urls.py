@@ -15,9 +15,9 @@ from bbbs.places.views import PlaceListView, PlacePostUpdateView, PlaceTagList
 from bbbs.rights.views import RightList, RightView, RightTagList
 from bbbs.articles.viesws import ArticleListView
 from bbbs.materials.viesws import MaterialListView
-from bbbs.movies.viesws import MovieListView
-from bbbs.books.viesws import BookListView
-from bbbs.videos.viesws import VideoListView
+from bbbs.movies.viesws import MovieListView, MovieTagList
+from bbbs.books.viesws import BookListView, BookTagList
+from bbbs.videos.viesws import VideoListView, VideoTagList
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -63,10 +63,13 @@ urlpatterns = [
    path('api/v1/articles/', ArticleListView.as_view()),
 
    path('api/v1/books/', BookListView.as_view()),
+   path('api/v1/books/tags/', BookTagList.as_view()),
 
    path('api/v1/materials/', MaterialListView.as_view()),
 
    path('api/v1/movies/', MovieListView.as_view()),
+   path('api/v1/movies/tags/', MovieTagList.as_view()),
 
    path('api/v1/videos/', VideoListView.as_view()),
+   path('api/v1/videos/tags/', VideoTagList.as_view()),
 ]

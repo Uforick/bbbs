@@ -41,7 +41,6 @@ class Movie(models.Model):
         verbose_name="Название",
         max_length=200,
     )
-    # надо посмотреть в figma, что имеется ввиду
     info = models.CharField(
         verbose_name="Инфо",
         max_length=200,
@@ -69,5 +68,8 @@ class Movie(models.Model):
         verbose_name = "Фильм"
         verbose_name_plural = "Фильмы"
 
+    def list_tags(self):
+        return self.tag.values_list('name', flat=True)
+    
     def __str__(self):
         return self.title

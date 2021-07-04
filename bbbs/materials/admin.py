@@ -4,9 +4,8 @@ from bbbs.materials.models import Material
 
 
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('title', 'text', 'imageUrl')
+    list_display = ('title',)
     search_fields = ('title',)
-    list_filter = ('title',)
     ordering = ('title',)
     empty_value_display = '-пусто-'
 

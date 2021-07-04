@@ -37,7 +37,6 @@ class Video(models.Model):
         verbose_name="Название",
         max_length=200,
     )
-    # надо посмотреть в figma, что имеется ввиду
     info = models.CharField(
         verbose_name="Инфо",
         max_length=200,
@@ -59,10 +58,6 @@ class Video(models.Model):
         blank=True,
         upload_to="videos/images",
     )
-    file = models.FileField(
-        upload_to="videos/uploaded",
-        null=True,
-    )
     link = models.URLField(
         max_length=200
     )
@@ -72,5 +67,8 @@ class Video(models.Model):
         verbose_name = "Видео"
         verbose_name_plural = "Видео"
 
+    def list_tags(self):
+        return self.tag.values_list('name', flat=True)
+        
     def __str__(self):
         return self.title

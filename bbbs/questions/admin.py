@@ -13,8 +13,11 @@ class QuestionTagInline(admin.TabularInline):
     verbose_name_plural = 'Теги'
 
     def has_delete_permission(self, request, obj):
-        if obj.tag.count() == 1:
-            return False
+        try:
+            if obj.tag.count() == 1:
+                return False
+        except:
+            pass
         return super().has_delete_permission(request, obj=obj)
 
 

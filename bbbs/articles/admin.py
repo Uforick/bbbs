@@ -4,9 +4,9 @@ from bbbs.articles.models import Article
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'link', 'text')
-    search_fields = ('title',)
-    list_filter = ('title',)
+    list_display = ('title', 'author')
+    search_fields = ('title', 'author')
+    list_filter = ('author',)
     ordering = ('title',)
     empty_value_display = '-пусто-'
 
