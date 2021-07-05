@@ -5,8 +5,16 @@ from rest_framework.exceptions import ValidationError
 from .models import Question, Tag
 
 
-class QuestionListSerializer(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Tag
+        fields = ('id', 'name', 'slug')
+        
+
+class QuestionListSerializer(serializers.ModelSerializer):
+    tag = TagSerializer(read_only=True, many=True)
+    
     class Meta:
         model = Question
         exclude = ('show_on_main_page',)
@@ -27,10 +35,3 @@ class QuestionViewPostSerializer(serializers.ModelSerializer):
                 'Вопрос должен быть строкой!'
             )
         return value
-
-
-class TagSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Tag
-        fields = ('id', 'name', 'slug')
