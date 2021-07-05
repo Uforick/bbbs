@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, pagination, permissions
+from rest_framework import generics, permissions
+from rest_framework.exceptions import ValidationError
 
 from .serializers import (PlaceListSerializer,
                           PlacePostSerializer,
@@ -8,8 +9,6 @@ from .models import Place, Tag
 from .filters import PlaceFilter
 from .generics import CreateRetrieveAPIView
 from bbbs.common.models import Profile
-
-DEFAULT_CITY = 'Москва'
 
 
 class PlaceListView(generics.ListAPIView):
@@ -22,7 +21,12 @@ class PlaceListView(generics.ListAPIView):
             user = get_object_or_404(Profile, user=self.request.user)
             places = Place.objects.filter(city__name=user.user_cities[0])
         else:
-            places = Place.objects.filter(city__name=DEFAULT_CITY)
+            city_id = self.request.query_params.get('city')
+            if not city_id.isdigit():
+                raise ValidationError(
+                    'ID города должен быть положительным целым числом!'
+                )
+            places = Place.objects.filter(city__id=city_id)
         return places
 
 
