@@ -19,8 +19,6 @@ from bbbs.videos.serializers import VideoSerializer
 
 from bbbs.main.stubs import HISTORY #MOVIES, VIDEO, ARTICLES
 
-DEFAULT_CITY = 'Москва'
-
 
 class MainView(APIView):
 
@@ -28,11 +26,9 @@ class MainView(APIView):
         if request.user.is_authenticated:
             city = request.user.profile.city.first()
             events = city.events.all()
-            places = city.place_set.filter(show_on_main_page=True)
         else:
             events = None
-            places = Place.objects.filter(city__name=DEFAULT_CITY,
-                                          show_on_main_page=True)
+        places = Place.objects.filter(chosen=True, show_on_main_page=True)
         articles = Article.objects.filter(show_on_main_page=True)
         movies = Movie.objects.filter(show_on_main_page=True)
         questions = Question.objects.filter(show_on_main_page=True)
