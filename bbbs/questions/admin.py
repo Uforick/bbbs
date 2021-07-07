@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.admin import helpers
 
+from .forms import QuestionAdminForm
 from .models import Question, Tag
 
 
@@ -22,6 +23,7 @@ class QuestionTagInline(admin.TabularInline):
 
 
 class QuestionAdmin(admin.ModelAdmin):
+    form = QuestionAdminForm
     inlines = (QuestionTagInline,)
     list_display = (
         'question', 'answer', 'get_tags'

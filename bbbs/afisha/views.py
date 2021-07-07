@@ -10,6 +10,7 @@ from bbbs.common.models import Profile
 class EventList(generics.ListAPIView):
     queryset = Event.objects.all().order_by('start_at')
     serializer_class = EventSerializer
+    pagination_class = None
 
     def get_queryset(self):
         events = None

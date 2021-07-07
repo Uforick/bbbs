@@ -15,6 +15,10 @@ class QuestionList(generics.ListAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionListSerializer
     filterset_class = QuestionFilter
+    pagination_class = None
+
+    def get_queryset(self):
+        return super().get_queryset().filter(show_on_main_page=True)
 
 
 class QuestionViewPost(generics.CreateAPIView,

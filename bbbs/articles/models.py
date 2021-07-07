@@ -31,11 +31,24 @@ class Article(models.Model):
         null=True,
         blank=True,
     )
-    text = models.TextField(
-        verbose_name='Описание',
-        help_text='Укажите, полное описание',
+    quote = models.TextField(
+        verbose_name='Цитата',
+        help_text='Укажите цитату для Главной страницы',
+        null=True,
+        blank=True,
     )
-
+    description = models.TextField(
+        verbose_name='Описание',
+        help_text='Укажите полное описание',
+    )
+    imageUrl = models.ImageField(
+        verbose_name="Фото",
+        help_text="Добавить фото",
+        null=True,
+        blank=True,
+        upload_to="articles/images",
+    )
+    
     class Meta:
         ordering = ('title',)
         verbose_name = "Статья"
