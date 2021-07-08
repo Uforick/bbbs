@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from bbbs.movies.forms import MovieAdminForm
 from bbbs.movies.models import Movie, Tag
 
 
@@ -20,6 +21,7 @@ class MovieTagInline(admin.TabularInline):
 
 
 class MovieAdmin(admin.ModelAdmin):
+    form = MovieAdminForm
     inlines = (MovieTagInline,)
     list_display = ('title', 'info', 'link', 'get_tags')
     search_fields = ('title',)

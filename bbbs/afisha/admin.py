@@ -13,7 +13,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'city', 'contact', 'start_at', 'end_at')
     search_fields = ('title', 'city', 'contact', 'start_at', 'end_at')
     list_filter = ('title', 'city', 'contact', 'start_at', 'end_at')
-    ordering = ('city',)
+    ordering = ('city', '-start_at')
     empty_value_display = '-пусто-'
     exclude = ('booked',)
     readonly_fields = ('get_taken_seats',)
@@ -27,8 +27,6 @@ class EventAdmin(admin.ModelAdmin):
 
     def get_taken_seats(self, obj):
         return obj.taken_seats
-
-    get_taken_seats.short_description = 'Кол-во занятых мест'
 
     get_taken_seats.short_description = 'Кол-во занятых мест'
 

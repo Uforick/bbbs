@@ -65,7 +65,7 @@ class Event(models.Model):
     class Meta:
         verbose_name = 'Событие'
         verbose_name_plural = 'События'
-        ordering = ('city',)
+        ordering = ('city', '-start_at')
 
 
 class EventParticipant(models.Model):

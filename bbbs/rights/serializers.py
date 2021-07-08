@@ -1,15 +1,17 @@
 from rest_framework import serializers
 
-from bbbs.rights.models import Right, RightTag
-
-
-class RightSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Right
-        exclude = ['show_on_main_page']
+from bbbs.rights.models import Right, Tag
 
 
 class RightTagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RightTag
+        model = Tag
         fields = serializers.ALL_FIELDS
+
+class RightSerializer(serializers.ModelSerializer):
+    tag = RightTagSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Right
+        exclude = ['show_on_main_page']
+

@@ -47,7 +47,7 @@ class Movie(models.Model):
     )
     link = models.URLField(
         verbose_name="Сайт",
-        help_text="Введите адрес сайта",
+        help_text="Введите адрес Youtube",
         null=True,
         blank=True,
     )
@@ -55,12 +55,13 @@ class Movie(models.Model):
         Tag,
         verbose_name="Тег",
     )
+    # если Youtube, то image автоматически вставляется
     imageUrl = models.ImageField(
         verbose_name="Фото",
         help_text="Добавить фото",
         null=True,
         blank=True,
-        upload_to="movies/images",
+        upload_to="movies/",
     )
 
     class Meta:

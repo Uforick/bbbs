@@ -51,12 +51,13 @@ class Video(models.Model):
         Tag,
         verbose_name="Тег",
     )
+    # если Youtube, то image автоматически вставляется
     imageUrl = models.ImageField(
         verbose_name="Фото",
         help_text="Добавить фото",
         null=True,
         blank=True,
-        upload_to="videos/images",
+        upload_to="videos/",
     )
     link = models.URLField(
         max_length=200

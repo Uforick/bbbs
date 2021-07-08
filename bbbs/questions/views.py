@@ -1,4 +1,3 @@
-import re
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError

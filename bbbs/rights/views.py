@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, generics
 
-from bbbs.rights.models import Right, RightTag
+from bbbs.rights.models import Right, Tag
 from bbbs.rights.serializers import RightSerializer, RightTagSerializer
 
 
@@ -22,7 +22,7 @@ class RightView(generics.RetrieveAPIView):
 
 
 class RightTagList(generics.ListAPIView):
-    queryset = RightTag.objects.all()
+    queryset = Tag.objects.all()
     serializer_class = RightTagSerializer
     filterset_fields = ['slug']
     pagination_class = None

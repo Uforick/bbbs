@@ -23,15 +23,15 @@ class PlaceListView(generics.ListAPIView):
         if self.request.user.is_authenticated:
             user = get_object_or_404(Profile, user=self.request.user)
             places = Place.objects.filter(city__name=user.user_cities[0])
-        elif not self.request.user.is_authenticated:
+        elif self.request.query_params and not self.request.user.is_authenticated:
             city_id = self.request.query_params.get('city')
             if not city_id.isdigit():
                 raise ValidationError(
                     'ID города должен быть положительным целым числом!'
                 )
             places = Place.objects.filter(city__id=city_id)
-        # else:
-        #     places = Place.objects.filter(city__name=DEFAULT_CITY)
+        else:
+            places = Place.objects.filter(city__name=DEFAULT_CITY)
         return places
 
 

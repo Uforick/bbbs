@@ -46,9 +46,9 @@ class Article(models.Model):
         help_text="Добавить фото",
         null=True,
         blank=True,
-        upload_to="articles/images",
+        upload_to="articles/",
     )
-    
+
     class Meta:
         ordering = ('title',)
         verbose_name = "Статья"
