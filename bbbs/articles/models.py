@@ -31,12 +31,6 @@ class Article(models.Model):
         null=True,
         blank=True,
     )
-    quote = models.TextField(
-        verbose_name='Цитата',
-        help_text='Укажите цитату для Главной страницы',
-        null=True,
-        blank=True,
-    )
     description = models.TextField(
         verbose_name='Описание',
         help_text='Укажите полное описание',
