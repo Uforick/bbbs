@@ -63,39 +63,27 @@ class MainView(APIView):
         try:
             places_data = random.sample(places_serializer.data, PLACES_OBJ_ON_MAIN_PAGE)
         except:
-            raise IndexError(f'В разделе "{Place._meta.verbose_name_plural}" заполните поле '
-                             f'"{Place.show_on_main_page.field.verbose_name}" и "{Place.chosen.field.verbose_name}" '
-                             f'хотя бы у {PLACES_OBJ_ON_MAIN_PAGE} события!')
+            places_data = []
         try:
             articles_data = random.sample(articles_serializer.data, ARTICLES_OBJ_ON_MAIN_PAGE)
         except:
-            raise IndexError(f'В разделе "{Article._meta.verbose_name_plural}" заполните поле '
-                             f'"{Article.show_on_main_page.field.verbose_name}" '
-                             f'хотя бы у {ARTICLES_OBJ_ON_MAIN_PAGE} статей!')
+            articles_data = []
         try:
             movies_data = random.sample(movies_serializer.data, MOVIES_OBJ_ON_MAIN_PAGE)
         except:
-            raise IndexError(f'В разделе "{Movie._meta.verbose_name_plural}" заполните поле '
-                             f'"{Movie.show_on_main_page.field.verbose_name}" '
-                             f'хотя бы у {MOVIES_OBJ_ON_MAIN_PAGE} фильмов!')
+            movies_data = []
         try:
             videos_data = random.sample(videos_serializer.data, VIDEOS_OBJ_ON_MAIN_PAGE)
         except:
-            raise IndexError(f'В разделе "{Video._meta.verbose_name_plural}" заполните поле '
-                             f'"{Video.show_on_main_page.field.verbose_name}" '
-                             f'хотя бы у {VIDEOS_OBJ_ON_MAIN_PAGE} видео!')
+            videos_data = []
         try:
             questions_data = random.sample(questions_serializer.data, QUESTIONS_OBJ_ON_MAIN_PAGE)
         except:
-            raise IndexError(f'В разделе "{Question._meta.verbose_name_plural}" заполните поле '
-                             f'"{Question.show_on_main_page.field.verbose_name}" '
-                             f'хотя бы у {QUESTIONS_OBJ_ON_MAIN_PAGE} вопросов!')        
+            questions_data = []      
         try:
             rights_data = random.sample(rights_serializer.data, RIGHTS_OBJ_ON_MAIN_PAGE)
         except:
-            raise IndexError(f'В разделе "{Right._meta.verbose_name_plural}" заполните поле '
-                             f'"{Right.show_on_main_page.field.verbose_name}" '
-                             f'хотя бы у {RIGHTS_OBJ_ON_MAIN_PAGE} прав!')  
+            rights_data = []  
 
         return Response({
             'event': events_data,
