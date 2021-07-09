@@ -50,3 +50,18 @@ class PlaceTagList(generics.ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = None
+
+    def list(self, request, *args, **kwargs):
+        results = super().list(request, *args, **kwargs)
+        new_results = {
+            'tag_age': [],
+            'tag_activity': []
+        }
+        for data in results.data:
+            slug = data.get('slug')
+            if slug[0].isdigit():
+                new_results['tag_age'].append(data)
+            else:
+                new_results['tag_activity'].append(data)
+        results.data = new_results
+        return results

@@ -19,15 +19,32 @@ class Right(models.Model):
         default=False,
         verbose_name='Показать на главной странице'
     )
-    title = models.CharField(max_length=200, verbose_name='Название')
-    description = models.CharField(max_length=500, verbose_name='Описание')
-    text = models.TextField(verbose_name='Текст')
-    color = models.CharField(max_length=50, verbose_name='Цвет')
-    image = models.ImageField(blank=True, verbose_name='Картинка',
-                              upload_to='rights/')
-    tag = models.ManyToManyField(Tag, verbose_name='Теги',
-                                related_name='rights')
-
+    title = models.CharField(
+        max_length=200,
+        verbose_name='Название'
+    )
+    description = models.CharField(
+        max_length=500,
+        verbose_name='Описание'
+    )
+    text = models.TextField(
+        verbose_name='Текст'
+    )
+    color = models.CharField(
+        max_length=50,
+        verbose_name='Цвет'
+    )
+    image = models.ImageField(
+        blank=True,
+        verbose_name='Картинка',
+        upload_to='rights/'
+    )
+    tag = models.ManyToManyField(
+        Tag, 
+        verbose_name='Тег',
+        related_name='rights',
+    )
+    
     class Meta:
         verbose_name = 'Права ребенка'
         verbose_name_plural = 'Права ребенка'
