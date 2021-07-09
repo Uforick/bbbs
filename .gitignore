@@ -155,3 +155,4 @@ media/
 req_praktikum.txt
 .vscode/
 
+bbbs/rights/migrations/0001_initial.py
