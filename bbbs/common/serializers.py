@@ -1,19 +1,24 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
+from rest_framework import exceptions
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from bbbs.common.models import City, Profile
 
 
-class CitySerializer(serializers.ModelSerializer):
 
+
+User = get_user_model()
+
+class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = serializers.ALL_FIELDS
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Profile
         exclude = ('role',)
@@ -35,3 +40,13 @@ class ProfileSerializer(serializers.ModelSerializer):
                 {'FieldError': 'У наставника может быть только один город.'}
             )
         return attrs
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        username, password = attrs.values()
+        user_profile = Profile.objects.get(user__username = username)
+        if not user_profile.is_mentor:
+            error_message = "Получить токен можно только с ролью Наставник"
+            raise exceptions.AuthenticationFailed(error_message)
+        return super().validate(attrs)
